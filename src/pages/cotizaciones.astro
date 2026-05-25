@@ -1,0 +1,124 @@
+---
+// src/pages/cotizaciones.astro
+import Layout from '../layouts/Layout.astro';
+import { CONTACT_INFO } from '../constants.ts';
+---
+
+<Layout title="Solicitar Cotización Industrial">
+  
+  <section class="bg-gradient-to-br from-[#00456F] via-[#005C94] to-[#009EE0] relative overflow-hidden py-20 text-center text-white">
+    <div class="absolute inset-0 bg-[radial-gradient(#91DAEE_1px,transparent_1px)] [background-size:16px_16px] opacity-15"></div>
+    <div class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+      <span class="text-[#91DAEE] font-bold uppercase tracking-widest text-xs">Atención Comercial Inmediata</span>
+      <h1 class="text-4xl md:text-5xl font-black mt-3 mb-6 tracking-tight">
+        ¿Cómo solicitar una cotización?
+      </h1>
+      <p class="text-blue-50/90 font-light leading-relaxed text-base md:text-lg">
+        Para brindarle un presupuesto exacto y adaptado a las necesidades de su empresa, procesamos todos nuestros requerimientos de forma personalizada a través de nuestros canales oficiales.
+      </p>
+    </div>
+  </section>
+
+  <section class="py-16 bg-[#F7FAFD]">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+      
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-start">
+        
+        <div class="lg:col-span-7 bg-white border border-[#91DAEE]/20 rounded-2xl p-8 shadow-sm">
+          <h2 class="text-[#00456F] font-black text-xl md:text-2xl mb-6 tracking-tight flex items-center gap-2">
+            📋 Información recomendada para su pedido
+          </h2>
+          <p class="text-slate-600 text-sm mb-8 leading-relaxed">
+            Prepare los siguientes datos al momento de contactar a nuestros ejecutivos. Esto nos permitirá agilizar los tiempos de respuesta en su orden de producción:
+          </p>
+
+          <div class="space-y-6">
+            <div class="flex gap-4">
+              <div class="bg-[#F7FAFD] border border-[#91DAEE]/40 text-[#009EE0] font-mono font-bold w-8 h-8 rounded-lg flex items-center justify-center shrink-0">1</div>
+              <div>
+                <h3 class="font-bold text-[#00456F] text-sm mb-1">Producto y Volumen</h3>
+                <p class="text-slate-600 text-xs leading-relaxed">Especifique el artículo requerido (ej: Carpetas corporativas) y la cantidad exacta. Recuerde revisar los mínimos de compra (MOQ) en nuestro catálogo.</p>
+              </div>
+            </div>
+
+            <div class="flex gap-4">
+              <div class="bg-[#F7FAFD] border border-[#91DAEE]/40 text-[#009EE0] font-mono font-bold w-8 h-8 rounded-lg flex items-center justify-center shrink-0">2</div>
+              <div>
+                <h3 class="font-bold text-[#00456F] text-sm mb-1">Especificaciones Técnicas</h3>
+                <p class="text-slate-600 text-xs leading-relaxed">Indique si requiere un sustrato específico (gramaje del papel, tipo de tela o vinilo) y los acabados de protección (polilaminado mate, lacado UV o troquelados).</p>
+              </div>
+            </div>
+
+            <div class="flex gap-4">
+              <div class="bg-[#F7FAFD] border border-[#91DAEE]/40 text-[#009EE0] font-mono font-bold w-8 h-8 rounded-lg flex items-center justify-center shrink-0">3</div>
+              <div>
+                <h3 class="font-bold text-[#00456F] text-sm mb-1">Archivos de Diseño (Opcional)</h3>
+                <p class="text-slate-600 text-xs leading-relaxed">Si dispone del diseño, es ideal contar con planos mecánicos o archivos vectoriales en alta fidelidad (PDF, AI o EPS) listos para prensa.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="lg:col-span-5 space-y-4">
+          <h2 class="text-[#00456F] font-black text-lg md:text-xl mb-2 tracking-tight px-2">
+            🚀 Seleccione su canal de preferencia
+          </h2>
+          
+          <a 
+            href={CONTACT_INFO.whatsappUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            class="block bg-emerald-600 hover:bg-emerald-500 text-white p-5 rounded-2xl shadow-sm transition-all duration-300 transform hover:scale-[1.03] group active:scale-95 border border-emerald-700/10"
+          >
+            <div class="flex items-center justify-between">
+              <div class="flex items-center gap-4">
+                <span class="text-3xl">💬</span>
+                <div>
+                  <h3 class="font-bold text-base">WhatsApp Corporativo</h3>
+                  <p class="text-emerald-100 text-xs font-light">Respuesta inmediata de un ejecutivo</p>
+                </div>
+              </div>
+              <span class="text-xl opacity-0 group-hover:opacity-100 transition-opacity">➔</span>
+            </div>
+          </a>
+
+          <a 
+            href={`mailto:${CONTACT_INFO.email || 'mvallejos@vatagraphic.cl'}?subject=Solicitud%20de%20Cotizacion%20Corporativa`}
+            class="block bg-white hover:bg-[#F7FAFD] text-[#00456F] p-5 rounded-2xl shadow-sm transition-all duration-300 transform hover:scale-[1.03] group active:scale-95 border border-[#91DAEE]/30"
+          >
+            <div class="flex items-center justify-between">
+              <div class="flex items-center gap-4">
+                <span class="text-3xl">✉️</span>
+                <div>
+                  <h3 class="font-bold text-base text-[#00456F]">Correo Electrónico</h3>
+                  <p class="text-slate-500 text-xs font-light">Ideal para envío de bases técnicas y archivos pesados</p>
+                </div>
+              </div>
+              <span class="text-xl text-[#009EE0] opacity-0 group-hover:opacity-100 transition-opacity">➔</span>
+            </div>
+          </a>
+
+          <a 
+            href={`tel:${CONTACT_INFO.phone || ''}`}
+            class="block bg-white hover:bg-[#F7FAFD] text-[#00456F] p-5 rounded-2xl shadow-sm transition-all duration-300 transform hover:scale-[1.03] group active:scale-95 border border-[#91DAEE]/30"
+          >
+            <div class="flex items-center justify-between">
+              <div class="flex items-center gap-4">
+                <span class="text-3xl">📞</span>
+                <div>
+                  <h3 class="font-bold text-base text-[#00456F]">Central Telefónica</h3>
+                  <p class="text-slate-500 text-xs font-light">Atención directa para consultas urgentes</p>
+                </div>
+              </div>
+              <span class="text-xl text-[#009EE0] opacity-0 group-hover:opacity-100 transition-opacity">➔</span>
+            </div>
+          </a>
+
+        </div>
+
+      </div>
+
+    </div>
+  </section>
+
+</Layout>
