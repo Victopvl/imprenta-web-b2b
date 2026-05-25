@@ -1,0 +1,28 @@
+---
+// src/components/HeroPage.astro
+import { DESIGN_SYSTEM } from '../constants.ts';
+
+interface Props {
+  tagline: string;
+  title: string;
+  description: string;
+}
+
+const { tagline, title, description } = Astro.props;
+---
+
+<section class={`${DESIGN_SYSTEM.colors.heroBg} text-white`}>
+  <div class={`${DESIGN_SYSTEM.containers.mainGrid} ${DESIGN_SYSTEM.containers.heroPadding}`}>
+    <div class="max-w-3xl">
+      <span class={DESIGN_SYSTEM.typography.tagline}>
+        {tagline}
+      </span>
+      <h1 class={DESIGN_SYSTEM.typography.h1}>
+        {title}
+      </h1>
+      <p class={DESIGN_SYSTEM.typography.heroParagraph}>
+        {description}
+      </p>
+    </div>
+  </div>
+</section>

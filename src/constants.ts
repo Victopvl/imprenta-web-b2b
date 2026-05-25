@@ -3,29 +3,40 @@
 // 1. Datos de Contacto Comercial Centralizados
 export const CONTACT_INFO = {
   companyName: "Imprenta Corporativa B2B",
-  phone: "+56912345678", // Reemplaza con el número real del vendedor
+  phone: "+56912345678", 
   email: "ejecutivo@tuimprenta.com",
   whatsappUrl: "https://wa.me/56912345678?text=Hola,%20vengo%20de%20la%20página%20web%20y%20me%20gustaría%20cotizar%20un%20proyecto%20corporativo.",
   address: "Santiago, Chile",
 };
 
-// 2. Sistema de Diseño Predictivo (Colores y Estructuras)
+// 2. Sistema de Diseño Centralizado y Homologado (Alíneado al píxel)
 export const DESIGN_SYSTEM = {
-  // Paleta de colores ejecutiva (Azul Marino Corporativo y Blanco)
+  // Colores corporativos estrictos extraídos de tus vistas activas
   colors: {
-    primaryBg: "bg-[#0A2540]",     // Fondo azul profundo institucional para el Hero/Navbar
-    primaryText: "text-[#0A2540]", // Texto principal
-    accent: "bg-[#00D4B2]",        // Color de acento de alta conversión para CTAs (Verde turquesa/Cyan brillante)
+    heroBg: "bg-[#0a2540]",          // El azul profundo institucional de tus cabeceras
+    contentBg: "bg-slate-950",       // El fondo oscuro premium del cuerpo de las páginas
+    accent: "bg-[#00D4B2]",          // El turquesa de alta conversión (Botones)
     accentHover: "hover:bg-[#00bda0]",
-    lightBg: "bg-[#F8FAFC]",       // Fondos alternos grisáceos muy limpios
-    whiteCard: "bg-white",
+    accentText: "text-[#00D4B2]",
   },
   
-  // Estructura de bloques rígidos tradicionales
-  layouts: {
-    sectionPadding: "py-24 px-6 max-w-7xl mx-auto",
-    cardBorder: "border border-slate-200/80 rounded-sm shadow-sm hover:shadow-md transition-all duration-200",
-    title: "text-3xl md:text-4xl font-bold tracking-tight text-slate-900 font-sans",
-    subtitle: "text-slate-500 text-lg mt-3 max-w-2xl font-light",
+  // Contenedores globales rígidos para evitar desbordes o asimetrías
+  containers: {
+    // Grilla horizontal que comparte el Navbar, Hero, Catálogo y Nosotros
+    mainGrid: "max-w-7xl mx-auto px-4 sm:px-6 lg:px-8",
+    // Respiración uniforme para todas las secciones de encabezado (Hero)
+    heroPadding: "py-20 md:py-28",
+  },
+  
+  // Tipografía idéntica en tamaños, interlineados y grosores
+  typography: {
+    // El texto pequeño verde arriba de los títulos principales
+    tagline: "text-[#00D4B2] font-bold tracking-widest text-xs uppercase block mb-4",
+    // Título principal gigante de cada página
+    h1: "text-4xl md:text-5xl font-black tracking-tight text-white mb-6 leading-tight",
+    // Párrafo descriptivo del Hero
+    heroParagraph: "text-slate-300 text-base md:text-lg font-light leading-relaxed max-w-2xl",
+    // Títulos de secciones secundarias o categorías dentro del contenido
+    sectionHeading: "text-xl font-bold text-white tracking-tight"
   }
 };
