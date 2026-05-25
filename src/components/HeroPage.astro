@@ -1,7 +1,5 @@
 ---
 // src/components/HeroPage.astro
-import { DESIGN_SYSTEM } from '../constants.ts';
-
 interface Props {
   tagline: string;
   title: string;
@@ -11,20 +9,20 @@ interface Props {
 const { tagline, title, description } = Astro.props;
 ---
 
-<section class={`${DESIGN_SYSTEM.colors.heroBg} text-white relative overflow-hidden border-b border-slate-900`}>
-  <div class={`${DESIGN_SYSTEM.layouts.mainGrid} ${DESIGN_SYSTEM.layouts.sectionPadding} relative z-10`}>
+<section class="bg-gradient-to-br from-[#009EE0] via-[#007BB3] to-[#00456F] text-white relative overflow-hidden border-b border-slate-900/10 py-24 md:py-32">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
     <div class="max-w-4xl">
-      <span class={DESIGN_SYSTEM.typography.tagline}>
+      <span class="text-[#91DAEE] font-bold uppercase tracking-widest text-xs block mb-3">
         {tagline}
       </span>
-      <h1 class={DESIGN_SYSTEM.typography.h1}>
+      <h1 class="text-4xl md:text-5xl lg:text-6xl font-black text-white tracking-tight mb-6 leading-tight">
         {title}
       </h1>
-      <p class={DESIGN_SYSTEM.typography.heroParagraph}>
+      <p class="text-blue-50/90 font-light leading-relaxed text-base md:text-lg max-w-2xl mb-8">
         {description}
       </p>
       <slot />
     </div>
   </div>
-  <div class="absolute inset-0 bg-[radial-gradient(#1e293b_1px,transparent_1px)] [background-size:16px_16px] opacity-20"></div>
+  <div class="absolute inset-0 bg-[radial-gradient(#91DAEE_1px,transparent_1px)] [background-size:16px_16px] opacity-15"></div>
 </section>
