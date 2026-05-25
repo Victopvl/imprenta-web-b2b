@@ -1,32 +1,77 @@
 ---
 // src/layouts/Layout.astro
 import '../styles/global.css';
-import { CONTACT_INFO } from '../constants';
 
 interface Props {
   title: string;
-  description: string;
+  description?: string;
 }
 
-const { title, description } = Astro.props;
+const { 
+  title, 
+  description = "Imprenta industrial B2B. Proveedor oficial para empresas, hoteles, colegios y eventos. Impresión offset, digital y gran escala." 
+} = Astro.props;
 ---
 
-<!DOCTYPE html>
+<!doctype html>
 <html lang="es" class="scroll-smooth">
   <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="description" content={description} />
-    <link rel="icon" type="image/png" href="/favicon.png" />
-    <title>{title} | {CONTACT_INFO.companyName}</title>
-  </head>
-  <body class="bg-white text-slate-800 font-sans antialiased selection:bg-[#00D4B2]/30">
+    <meta name="viewport" content="width=device-width" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="generator" content={Astro.generator} />
     
-    <slot />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+  </head>
+  <body class="bg-[#0a2540] text-white min-h-screen font-sans antialiased">
+    
+    <header class="bg-slate-950/90 backdrop-blur-md border-b border-slate-800/50 sticky top-0 z-50">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
+        
+        <a href="#inicio" class="flex items-center gap-3 group">
+          <div class="w-10 h-10 bg-emerald-400 rounded-lg flex items-center justify-center font-bold text-slate-950 shadow-sm transition-transform duration-200 group-hover:scale-105">
+            <span class="text-xl font-black">I</span>
+            </div>
+          <span class="font-bold text-lg tracking-tight text-white group-hover:text-emerald-400 transition-colors duration-200 hidden sm:block">
+            Imprenta Corporativa B2B
+          </span>
+        </a>
+
+        <nav class="hidden md:flex items-center gap-6 lg:gap-8 text-sm font-medium text-slate-300">
+          <a href="#inicio" class="hover:text-emerald-400 transition-colors duration-200">Inicio</a>
+          <a href="#sobre-nosotros" class="hover:text-emerald-400 transition-colors duration-200">Sobre nosotros</a>
+          <a href="#catalogo" class="hover:text-emerald-400 transition-colors duration-200">Catálogo</a>
+          <a href="#cotizaciones" class="hover:text-emerald-400 transition-colors duration-200">Cotizaciones</a>
+          <a href="#preguntas-frecuentes" class="hover:text-emerald-400 transition-colors duration-200">Preguntas frecuentes</a>
+        </nav>
+
+        <div class="flex items-center">
+          <a 
+            href="#contacto" 
+            class="bg-emerald-400 hover:bg-emerald-500 text-slate-950 font-bold px-5 py-2.5 rounded-lg text-xs uppercase tracking-wider transition-all duration-200 shadow-md active:scale-95"
+          >
+            Hablar con un Ejecutivo
+          </a>
+        </div>
+
+      </div>
+    </header>
+
+    <main>
+      <slot />
+    </main>
+
+    <footer class="bg-slate-950 border-t border-slate-900 py-8 mt-20 text-center text-sm text-slate-500">
+      <div class="max-w-7xl mx-auto px-4">
+        <p>&copy; {new Date().getFullYear()} Imprenta Corporativa B2B. Todos los derechos reservados.</p>
+      </div>
+    </footer>
 
   </body>
 </html>
 
 <style is:global>
-  @import "tailwindcss";
+  /* Mantiene la compatibilidad con Tailwind v4 inyectado desde global.css */
+  @import "../styles/global.css";
 </style>
