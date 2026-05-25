@@ -3,7 +3,6 @@
 import Layout from '../layouts/Layout.astro';
 import { CONTACT_INFO } from '../constants.ts';
 
-// Forzamos una variable limpia para evitar errores de compilación
 const emailDestino = CONTACT_INFO.email || 'mvallejos@vatagraphic.cl';
 ---
 
@@ -17,8 +16,7 @@ const emailDestino = CONTACT_INFO.email || 'mvallejos@vatagraphic.cl';
         ¿Cómo solicitar una cotización?
       </h1>
       <p class="text-blue-50/90 font-light leading-relaxed text-base md:text-lg">
-        Para brindarle un presupuesto exacto y adaptado a las necesidades de su empresa, procesamos todos nuestros requerimientos de forma personalizada a través de nuestros canales oficiales.
-      </p>
+Para ofrecerte un presupuesto exacto y adaptado a tu empresa, resolvemos cada solicitud de forma personalizada a través de nuestros canales oficiales. Escoge la opción que te resulte más cómoda.      </p>
     </div>
   </section>
 
@@ -32,8 +30,7 @@ const emailDestino = CONTACT_INFO.email || 'mvallejos@vatagraphic.cl';
             📋 Información recomendada para su pedido
           </h2>
           <p class="text-slate-600 text-sm mb-8 leading-relaxed">
-            Prepare los siguientes datos al momento de contactar a nuestros ejecutivos. Esto nos permitirá agilizar los tiempos de respuesta en su orden de producción:
-          </p>
+Ten a la mano los siguientes datos al momento de contactar a nuestro equipo. Esto nos ayudará a darte una respuesta mucho más rápida y poner en marcha tu proyecto sin demoras.          </p>
 
           <div class="space-y-6">
             <div class="flex gap-4">
@@ -85,21 +82,29 @@ const emailDestino = CONTACT_INFO.email || 'mvallejos@vatagraphic.cl';
             </div>
           </a>
 
-          <a 
-            href={`mailto:${emailDestino}?subject=Solicitud%20de%20Cotizacion%20Corporativa`}
-            class="block bg-white hover:bg-[#F7FAFD] text-[#00456F] p-5 rounded-2xl shadow-sm transition-all duration-300 transform hover:scale-[1.03] group active:scale-95 border border-[#91DAEE]/30"
+          <div 
+            id="email-card"
+            data-email={emailDestino}
+            class="block bg-white hover:bg-[#F7FAFD] text-[#00456F] p-5 rounded-2xl shadow-sm transition-all duration-300 transform hover:scale-[1.03] group active:scale-95 border border-[#91DAEE]/30 cursor-pointer relative"
           >
             <div class="flex items-center justify-between">
               <div class="flex items-center gap-4">
                 <span class="text-3xl">✉️</span>
                 <div>
-                  <h3 class="font-bold text-base text-[#00456F]">Correo Electrónico</h3>
+                  <h3 class="font-bold text-base text-[#00456F] flex items-center gap-2">
+                    Correo Electrónico
+                    <span id="copy-toast" class="text-[10px] bg-emerald-100 text-emerald-700 px-2 py-0.5 rounded-md opacity-0 transition-opacity duration-300 font-bold uppercase tracking-wider">
+                      ¡Copiado!
+                    </span>
+                  </h3>
                   <p class="text-slate-500 text-xs font-light">{emailDestino}</p>
                 </div>
               </div>
-              <span class="text-xl text-[#009EE0] opacity-0 group-hover:opacity-100 transition-opacity">➔</span>
+              <span id="email-action-btn" class="text-xs bg-[#F7FAFD] group-hover:bg-[#009EE0] group-hover:text-white text-slate-500 border border-slate-200 group-hover:border-[#009EE0] font-bold px-3 py-2 rounded-xl transition-all">
+                Enviar
+              </span>
             </div>
-          </a>
+          </div>
 
           <a 
             href={`tel:${CONTACT_INFO.phone || ''}`}
@@ -123,5 +128,43 @@ const emailDestino = CONTACT_INFO.email || 'mvallejos@vatagraphic.cl';
 
     </div>
   </section>
+
+  <script is:inline>
+    document.addEventListener('DOMContentLoaded', () => {
+      const emailCard = document.getElementById('email-card');
+      const copyToast = document.getElementById('copy-toast');
+      const actionBtn = document.getElementById('email-action-btn');
+
+      if (emailCard) {
+        emailCard.addEventListener('click', () => {
+          const email = emailCard.getAttribute('data-email');
+          
+          // 1. Intentamos disparar la acción nativa de redactar correo
+          window.location.href = `mailto:${email}?subject=Solicitud%20de%20Cotizacion%20Corporativa`;
+          
+          // 2. Fallback de respaldo: Lo copiamos inmediatamente al portapapeles del usuario
+          if (navigator.clipboard && navigator.clipboard.writeText) {
+            navigator.clipboard.writeText(email).then(() => {
+              // Mostramos el tag verde de éxito
+              copyToast.classList.remove('opacity-0');
+              copyToast.classList.add('opacity-100');
+              actionBtn.innerText = "¡Copiado!";
+              actionBtn.classList.remove('bg-[#F7FAFD]', 'text-slate-500');
+              actionBtn.classList.add('bg-emerald-600', 'text-white', 'border-emerald-600');
+              
+              // Restauramos el botón después de 2.5 segundos
+              setTimeout(() => {
+                copyToast.classList.remove('opacity-100');
+                copyToast.classList.add('opacity-0');
+                actionBtn.innerText = "Enviar";
+                actionBtn.classList.remove('bg-emerald-600', 'text-white', 'border-emerald-600');
+                actionBtn.classList.add('bg-[#F7FAFD]', 'text-slate-500');
+              }, 2500);
+            }).catch(err => console.error("Error al copiar: ", err));
+          }
+        });
+      }
+    });
+  </script>
 
 </Layout>
