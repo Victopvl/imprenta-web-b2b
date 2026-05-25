@@ -2,6 +2,9 @@
 // src/pages/cotizaciones.astro
 import Layout from '../layouts/Layout.astro';
 import { CONTACT_INFO } from '../constants.ts';
+
+// Forzamos una variable limpia para evitar errores de compilación
+const emailDestino = CONTACT_INFO.email || 'mvallejos@vatagraphic.cl';
 ---
 
 <Layout title="Solicitar Cotización Industrial">
@@ -83,7 +86,7 @@ import { CONTACT_INFO } from '../constants.ts';
           </a>
 
           <a 
-            href={`mailto:${CONTACT_INFO.email || 'mvallejos@vatagraphic.cl'}?subject=Solicitud%20de%20Cotizacion%20Corporativa`}
+            href={`mailto:${emailDestino}?subject=Solicitud%20de%20Cotizacion%20Corporativa`}
             class="block bg-white hover:bg-[#F7FAFD] text-[#00456F] p-5 rounded-2xl shadow-sm transition-all duration-300 transform hover:scale-[1.03] group active:scale-95 border border-[#91DAEE]/30"
           >
             <div class="flex items-center justify-between">
@@ -91,7 +94,7 @@ import { CONTACT_INFO } from '../constants.ts';
                 <span class="text-3xl">✉️</span>
                 <div>
                   <h3 class="font-bold text-base text-[#00456F]">Correo Electrónico</h3>
-                  <p class="text-slate-500 text-xs font-light">Ideal para envío de bases técnicas y archivos pesados</p>
+                  <p class="text-slate-500 text-xs font-light">{emailDestino}</p>
                 </div>
               </div>
               <span class="text-xl text-[#009EE0] opacity-0 group-hover:opacity-100 transition-opacity">➔</span>
