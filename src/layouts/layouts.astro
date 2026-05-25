@@ -1,0 +1,28 @@
+---
+// src/layouts/Layout.astro
+import '../styles/global.css';
+import { CONTACT_INFO } from '../constants';
+
+interface Props {
+  title: string;
+  description: string;
+}
+
+const { title, description } = Astro.props;
+---
+
+<!DOCTYPE html>
+<html lang="es" class="scroll-smooth">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content={description} />
+    <link rel="icon" type="image/png" href="/favicon.png" />
+    <title>{title} | {CONTACT_INFO.companyName}</title>
+  </head>
+  <body class="bg-white text-slate-800 font-sans antialiased selection:bg-[#00D4B2]/30">
+    
+    <slot />
+
+  </body>
+</html>
