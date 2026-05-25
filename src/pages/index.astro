@@ -1,130 +1,101 @@
 ---
 // src/pages/index.astro
 import Layout from '../layouts/Layout.astro';
-import HeroPage from '../components/HeroPage.astro';
-import { CONTACT_INFO, DESIGN_SYSTEM } from '../constants.ts';
-
-const title = "Soluciones Gráficas e Impresión Corporativa";
-const description = "Imprenta industrial B2B. Proveedor oficial para empresas, hoteles, colegios y eventos.";
-
-const featuredServices = [
-  {
-    title: "Papelería Corporativa e Institucional",
-    desc: "Suministro continuo de carpetas corporativas, hojas membretadas, sobres y tarjetería fina para hoteles, colegios y marcas ejecutivas.",
-    specs: ["Papeles certificados", "Acabados sectorizados", "Control estricto de color (Pantone)"]
-  },
-  {
-    title: "Gran Formato y Producción para Eventos",
-    desc: "Pendones rollers, lienzos de alta densidad, gráficas vehiculares y muros fotográficos para productoras, ferias y empresas de publicidad.",
-    specs: ["Plotter alta resolución", "Sustratos intemperie", "Soporte de montaje reforzado"]
-  },
-  {
-    title: "Merchandising y Material Promocional",
-    desc: "Producción a escala de artículos corporativos de alta gama, libretas personalizadas, bolígrafos y regalos institucionales.",
-    specs: ["Grabado láser y tampografía", "Catálogo premium", "Descuentos por volumen B2B"]
-  }
-];
+import { DESIGN_SYSTEM, CONTACT_INFO } from '../constants.ts';
 ---
 
-<Layout title={title} description={description}>
-
-  <HeroPage 
-    tagline="Socio Gráfico Industrial B2B"
-    title="Impresión de alta fidelidad y logística a gran escala para empresas."
-    description="Especializados en resolver las necesidades gráficas de colegios, hoteles, productoras y corporativos con tiempos de entrega rigurosos y calidad garantizada."
-  >
-    <div class="flex flex-col sm:flex-row gap-4">
-      <a 
-        href={CONTACT_INFO.whatsappUrl} 
-        target="_blank"
-        rel="noopener noreferrer"
-        class={`${DESIGN_SYSTEM.colors.accent} ${DESIGN_SYSTEM.colors.accentHover} text-slate-950 font-bold px-8 py-4 text-center rounded-lg transition-colors shadow-lg shadow-[#00D4B2]/10 text-sm`}
-      >
-        Iniciar Cotización Corporativa
-      </a>
-      <a 
-        href="/catalogo" 
-        class="border border-slate-700 bg-slate-900/40 hover:bg-slate-900 text-white font-medium px-8 py-4 text-center rounded-lg transition-colors text-sm"
-      >
-        Ver Capacidad Técnico
-      </a>
-    </div>
-  </HeroPage>
-
-  <section class={`${DESIGN_SYSTEM.colors.bgSlate900} text-white border-t border-slate-800/60`}>
-    <div class={`${DESIGN_SYSTEM.layouts.mainGrid} ${DESIGN_SYSTEM.layouts.sectionPadding}`}>
-      <div class="grid lg:grid-cols-2 gap-12 lg:gap-20 items-center">
-        <div>
-          <span class={DESIGN_SYSTEM.typography.tagline}>Infraestructura y Respaldo</span>
-          <h2 class="text-3xl sm:text-4xl font-black tracking-tight mb-6 text-white">
-            Capacidad instalada para responder bajo presión volumétrica.
-          </h2>
-          <p class="text-slate-300 text-base leading-relaxed mb-6 font-light">
-            No operamos como una imprenta rápida tradicional. Nos estructuramos como un socio estratégico de suministro gráfico.
-          </p>
-          <div class="grid grid-cols-2 gap-6 border-t border-slate-800 pt-8">
-            <div>
-              <span class="block text-3xl font-black text-white tracking-tight mb-1">100%</span>
-              <span class="text-xs uppercase tracking-wider font-bold text-slate-400 block">Fidelidad Pantone</span>
-            </div>
-            <div>
-              <span class={`block text-3xl font-black ${DESIGN_SYSTEM.colors.accentText} tracking-tight mb-1`}>24/7</span>
-              <span class="text-xs uppercase tracking-wider font-bold text-slate-400 block">Soporte Logístico</span>
-            </div>
-          </div>
-        </div>
-
-        <div class="space-y-4">
-          {[
-            { id: "01", t: "Tecnología de Prensa Offset e Inyección", d: "Trenes de impresión automatizados para altas tiradas." },
-            { id: "02", t: "Estandarización ISO y Control de Color", d: "Calibración rigurosa de sustratos para identidad corporativa." },
-            { id: "03", t: "Logística Integrada de Despacho", d: "Despachamos de forma consolidada bajo estrictas ventanas horarias." }
-          ].map(item => (
-            <div class="bg-slate-950/50 p-6 rounded-xl border border-slate-800/40">
-              <div class="flex items-start gap-4">
-                <div class={`w-8 h-8 rounded-md bg-[#00D4B2]/10 flex items-center justify-center ${DESIGN_SYSTEM.colors.accentText} font-bold shrink-0`}>{item.id}</div>
-                <div>
-                  <h3 class="text-lg font-bold text-white mb-2">{item.t}</h3>
-                  <p class="text-slate-400 text-sm leading-relaxed">{item.d}</p>
-                </div>
-              </div>
-            </div>
-          ))}
-        </div>
+<Layout title="Inicio | Soluciones Gráficas Industriales">
+  
+  <section class={`${DESIGN_SYSTEM.colors.heroBg} relative overflow-hidden py-24 md:py-36 text-center`}>
+    <div class="absolute inset-0 bg-[radial-gradient(#91DAEE_1px,transparent_1px)] [background-size:16px_16px] opacity-15"></div>
+    
+    <div class={`${DESIGN_SYSTEM.layouts.mainGrid} relative z-10 max-w-4xl mx-auto`}>
+      <span class={DESIGN_SYSTEM.textOnDark.subtitle}>Soluciones de Impresión de Alta Escala</span>
+      <h1 class="text-4xl md:text-6xl font-black text-white mt-4 mb-6 tracking-tight leading-[1.15]">
+        El partner gráfico de las grandes corporaciones
+      </h1>
+      <p class={`${DESIGN_SYSTEM.textOnDark.paragraph} text-lg md:text-xl max-w-2xl mx-auto mb-10`}>
+        Automatizamos y abastecemos los requerimientos de impresión, merchandising y packaging industrial de su empresa con cero margen de error logístico.
+      </p>
+      
+      <div class="flex flex-wrap justify-center gap-4">
+        <a 
+          href="/catalogo" 
+          class="bg-white text-[#00456F] hover:bg-[#F7FAFD] font-bold px-8 py-4 rounded-xl text-sm uppercase tracking-wider transition-all shadow-lg shadow-blue-950/20 active:scale-95"
+        >
+          Explorar Catálogo
+        </a>
+        <a 
+          href={CONTACT_INFO.whatsappUrl} 
+          target="_blank" 
+          rel="noopener noreferrer" 
+          class={`${DESIGN_SYSTEM.colors.brandPrimary} border border-white/20 hover:bg-[#1CB1E1] text-white font-bold px-8 py-4 rounded-xl text-sm uppercase tracking-wider transition-all shadow-lg active:scale-95`}
+        >
+          Cotizar en Línea
+        </a>
       </div>
     </div>
   </section>
 
-  <section class={DESIGN_SYSTEM.colors.contentBg}>
-    <div class={`${DESIGN_SYSTEM.layouts.mainGrid} ${DESIGN_SYSTEM.layouts.sectionPadding}`}>
-      <div class="mb-16">
-        <h2 class={DESIGN_SYSTEM.typography.sectionHeading}>Líneas de Producción Principal</h2>
-        <p class="text-slate-400 text-base font-light max-w-2xl mt-2">
-          Soluciones volumétricas completas bajo estándares corporativos rigurosos.
+  <section class={`${DESIGN_SYSTEM.colors.bgWhite} ${DESIGN_SYSTEM.layouts.sectionPadding}`}>
+    <div class={DESIGN_SYSTEM.layouts.mainGrid}>
+      
+      <div class="text-center max-w-3xl mx-auto mb-16">
+        <span class={DESIGN_SYSTEM.textOnLight.subtitle}>Estándar Operativo</span>
+        <h2 class={`${DESIGN_SYSTEM.textOnLight.title} text-3xl md:text-4xl mt-2 mb-4`}>
+          ¿Por qué las gerencias de compras nos eligen?
+        </h2>
+        <p class={DESIGN_SYSTEM.textOnLight.paragraph}>
+          Diseñamos un flujo enfocado exclusivamente en el mercado B2B que elimina la fricción en la cadena de suministro gráfico.
         </p>
       </div>
 
-      <div class="grid md:grid-cols-3 gap-8">
-        {featuredServices.map((service) => (
-          <div class={`${DESIGN_SYSTEM.colors.whiteCard} ${DESIGN_SYSTEM.layouts.cardBorder} p-8 flex flex-col justify-between`}>
-            <div>
-              <div class="w-12 h-1 bg-[#00D4B2] mb-6"></div>
-              <h3 class="text-xl font-bold text-white mb-3">{service.title}</h3>
-              <p class="text-slate-400 text-sm leading-relaxed mb-6 font-light">{service.desc}</p>
-            </div>
-            <div class="border-t border-slate-800 pt-5 mt-4">
-              <span class="text-[11px] uppercase tracking-wider font-bold text-slate-500 block mb-3">Estándar Técnico:</span>
-              <ul class="space-y-2">
-                {service.specs.map((spec) => (
-                  <li class="text-xs text-slate-300 flex items-center font-light">
-                    <span class={`mr-2 ${DESIGN_SYSTEM.colors.accentText} font-bold`}>✓</span> {spec}
-                  </li>
-                ))}
-              </ul>
-            </div>
-          </div>
-        ))}
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+        
+        <div class="bg-[#F7FAFD] border border-[#91DAEE]/20 p-8 rounded-2xl shadow-sm transition-all hover:shadow-md">
+          <div class="w-12 h-12 bg-[#009EE0] rounded-xl flex items-center justify-center text-white text-xl font-bold mb-6">🎯</div>
+          <h3 class="text-xl font-bold text-[#00456F] mb-3">Precisión Cromática</h3>
+          <p class="text-slate-600 font-normal text-sm leading-relaxed">
+            Calibración densitométrica rigurosa para garantizar que la paleta cromática e identidad corporativa de su marca sea idéntica en cualquier sustrato.
+          </p>
+        </div>
+
+        <div class="bg-[#F7FAFD] border border-[#91DAEE]/20 p-8 rounded-2xl shadow-sm transition-all hover:shadow-md">
+          <div class="w-12 h-12 bg-[#009EE0] rounded-xl flex items-center justify-center text-white text-xl font-bold mb-6">📦</div>
+          <h3 class="text-xl font-bold text-[#00456F] mb-3">Volúmenes Industriales</h3>
+          <p class="text-slate-600 font-normal text-sm leading-relaxed">
+            Capacidad de respuesta técnica instalada para absorber altas tiradas de impresión y despachos consolidados bajo estrictas ventanas horarias.
+          </p>
+        </div>
+
+        <div class="bg-[#F7FAFD] border border-[#91DAEE]/20 p-8 rounded-2xl shadow-sm transition-all hover:shadow-md">
+          <div class="w-12 h-12 bg-[#009EE0] rounded-xl flex items-center justify-center text-white text-xl font-bold mb-6">💼</div>
+          <h3 class="text-xl font-bold text-[#00456F] mb-3">Convenios Corporativos</h3>
+          <p class="text-slate-600 font-normal text-sm leading-relaxed">
+            Estructura administrativa adaptada a portales de compras institucionales, estados de pago y atención ejecutiva totalmente personalizada.
+          </p>
+        </div>
+
       </div>
+    </div>
+  </section>
+
+  <section class={`${DESIGN_SYSTEM.colors.bgLight} py-20 border-t border-b border-[#91DAEE]/20`}>
+    <div class={`${DESIGN_SYSTEM.layouts.mainGrid} flex flex-col lg:flex-row items-center justify-between gap-10`}>
+      <div class="max-w-2xl">
+        <h2 class={`${DESIGN_SYSTEM.textOnLight.title} text-2xl md:text-3xl mb-3`}>
+          ¿Necesita soluciones o desarrollos estructurales a medida?
+        </h2>
+        <p class={DESIGN_SYSTEM.textOnLight.paragraph}>
+          Nuestro equipo técnico analiza los requerimientos volumétricos de su corporación para formular prototipos óptimos que protejan sus productos y su marca.
+        </p>
+      </div>
+      <a 
+        href="/sobre-nosotros" 
+        class="bg-[#00456F] hover:bg-[#003454] text-white font-bold px-8 py-4 rounded-xl text-sm uppercase tracking-wider transition-all whitespace-nowrap shadow-md shadow-blue-900/10 active:scale-95"
+      >
+        Conocer Infraestructura
+      </a>
     </div>
   </section>
 
