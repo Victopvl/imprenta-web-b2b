@@ -1,38 +1,37 @@
 ---
 // src/pages/sobre-nosotros.astro
 import Layout from '../layouts/Layout.astro';
-import { DESIGN_SYSTEM } from '../constants.ts';
 ---
 
 <Layout title="Infraestructura Escala Industrial">
   
-  <section class={`${DESIGN_SYSTEM.colors.heroBg} relative overflow-hidden py-24 md:py-32 text-center`}>
+  <section class="bg-gradient-to-br from-[#009EE0] via-[#007BB3] to-[#00456F] relative overflow-hidden py-24 md:py-32 text-center">
     <div class="absolute inset-0 bg-[radial-gradient(#91DAEE_1px,transparent_1px)] [background-size:16px_16px] opacity-15"></div>
-    <div class={`${DESIGN_SYSTEM.layouts.mainGrid} relative z-10 max-w-3xl`}>
-      <span class={DESIGN_SYSTEM.textOnDark.subtitle}>Socio de Suministro Gráfico B2B</span>
+    <div class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 text-center">
+      <span class="text-[#91DAEE] font-bold uppercase tracking-widest text-xs">Socio de Suministro Gráfico B2B</span>
       <h1 class="text-4xl md:text-5xl lg:text-6xl font-black text-white mt-3 mb-6 tracking-tight">
         Soluciones Gráficas a Gran Escala
       </h1>
-      <p class={DESIGN_SYSTEM.textOnDark.paragraph + " text-base md:text-lg"}>
+      <p class="text-blue-50/90 font-light leading-relaxed text-base md:text-lg">
         Conozca los pilares logísticos y tecnológicos que nos permiten respaldar las operaciones comerciales de las principales compañías del país.
       </p>
     </div>
   </section>
 
-  <section class={`${DESIGN_SYSTEM.colors.bgLight} ${DESIGN_SYSTEM.layouts.sectionPadding}`}>
-    <div class={DESIGN_SYSTEM.layouts.mainGrid}>
+  <section class="bg-[#F7FAFD] py-20 md:py-28">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
       <div class="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
         
         <div class="space-y-6">
-          <span class={DESIGN_SYSTEM.textOnLight.subtitle}>Infraestructura y Respaldo</span>
-          <h2 class={`${DESIGN_SYSTEM.textOnLight.title} text-3xl md:text-4xl lg:text-5xl leading-tight`}>
+          <span class="text-[#009EE0] font-bold uppercase tracking-wider text-sm">Infraestructura y Respaldo</span>
+          <h2 class="text-[#00456F] font-black tracking-tight text-3xl md:text-4xl lg:text-5xl leading-tight">
             Capacidad instalada para responder bajo presión volumétrica.
           </h2>
-          <p class={`${DESIGN_SYSTEM.textOnLight.paragraph} text-base md:text-lg`}>
+          <p class="text-slate-600 font-normal leading-relaxed text-base md:text-lg">
             No operamos como una imprenta rápida tradicional. Nos estructuramos de manera logística para resolver las cadenas de abastecimiento gráfico de grandes corporaciones, garantizando consistencia absoluta de marca.
           </p>
           
-          <div class="grid grid-cols-2 gap-6 pt-8 border-t border-[#91DAEE]/40">
+          <div class="grid grid-cols-2 gap-6 pt-8 border-t border-slate-200">
             <div>
               <p class="text-4xl md:text-5xl font-black text-[#009EE0] tracking-tight">100%</p>
               <p class="text-xs uppercase tracking-wider font-bold text-[#00456F] mt-1.5">Fidelidad Pantone</p>
@@ -50,13 +49,13 @@ import { DESIGN_SYSTEM } from '../constants.ts';
             { num: "02", title: "Estandarización ISO y Control de Color", desc: "Calibración densitométrica rigurosa de sustratos para mantener la consistencia cromática exacta corporativa." },
             { num: "03", title: "Logística Integrada de Despacho", desc: "Flota centralizada y empaques industriales consolidados bajo estrictas ventanas horarias B2B." }
           ].map((item) => (
-            <div class="bg-white border border-[#91DAEE]/30 p-6 rounded-2xl shadow-sm flex gap-5 items-start hover:shadow-md hover:border-[#009EE0]/30 transition-all duration-200">
-              <span class="text-xs font-mono font-bold bg-[#F7FAFD] text-[#009EE0] px-3 py-2 rounded-xl border border-[#91DAEE]/30 shrink-0">
+            <div class="bg-white border border-[#91DAEE]/40 p-6 rounded-2xl shadow-sm flex gap-5 items-start hover:shadow-md transition-all duration-200">
+              <span class="text-xs font-mono font-bold bg-[#F7FAFD] text-[#009EE0] px-3 py-2 rounded-xl border border-[#91DAEE]/40 shrink-0">
                 {item.num}
               </span>
               <div>
                 <h3 class="font-bold text-[#00456F] text-base mb-1.5">{item.title}</h3>
-                <p class="text-slate-500 text-sm font-light leading-relaxed">{item.desc}</p>
+                <p class="text-slate-600 text-sm font-light leading-relaxed">{item.desc}</p>
               </div>
             </div>
           ))}

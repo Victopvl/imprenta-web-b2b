@@ -1,27 +1,27 @@
 ---
 // src/pages/index.astro
 import Layout from '../layouts/Layout.astro';
-import { DESIGN_SYSTEM, CONTACT_INFO } from '../constants.ts';
+import { CONTACT_INFO } from '../constants.ts';
 ---
 
 <Layout title="Inicio | Soluciones Gráficas Industriales">
   
-  <section class={`${DESIGN_SYSTEM.colors.heroBg} relative overflow-hidden py-24 md:py-36 text-center`}>
+  <section class="bg-gradient-to-br from-[#009EE0] via-[#007BB3] to-[#00456F] relative overflow-hidden py-24 md:py-36 text-center">
     <div class="absolute inset-0 bg-[radial-gradient(#91DAEE_1px,transparent_1px)] [background-size:16px_16px] opacity-15"></div>
     
-    <div class={`${DESIGN_SYSTEM.layouts.mainGrid} relative z-10 max-w-4xl mx-auto`}>
-      <span class={DESIGN_SYSTEM.textOnDark.subtitle}>Soluciones de Impresión de Alta Escala</span>
+    <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 text-center">
+      <span class="text-[#91DAEE] font-bold uppercase tracking-widest text-xs">Soluciones de Impresión de Alta Escala</span>
       <h1 class="text-4xl md:text-6xl font-black text-white mt-4 mb-6 tracking-tight leading-[1.15]">
         El partner gráfico de las grandes corporaciones
       </h1>
-      <p class={`${DESIGN_SYSTEM.textOnDark.paragraph} text-lg md:text-xl max-w-2xl mx-auto mb-10`}>
+      <p class="text-blue-50/90 font-light leading-relaxed text-lg md:text-xl max-w-2xl mx-auto mb-10">
         Automatizamos y abastecemos los requerimientos de impresión, merchandising y packaging industrial de su empresa con cero margen de error logístico.
       </p>
       
       <div class="flex flex-wrap justify-center gap-4">
         <a 
           href="/catalogo" 
-          class="bg-white text-[#00456F] hover:bg-[#F7FAFD] font-bold px-8 py-4 rounded-xl text-sm uppercase tracking-wider transition-all shadow-lg shadow-blue-950/20 active:scale-95"
+          class="bg-white text-[#00456F] hover:bg-[#F7FAFD] font-bold px-8 py-4 rounded-xl text-sm uppercase tracking-wider transition-all shadow-lg active:scale-95"
         >
           Explorar Catálogo
         </a>
@@ -29,7 +29,7 @@ import { DESIGN_SYSTEM, CONTACT_INFO } from '../constants.ts';
           href={CONTACT_INFO.whatsappUrl} 
           target="_blank" 
           rel="noopener noreferrer" 
-          class={`${DESIGN_SYSTEM.colors.brandPrimary} border border-white/20 hover:bg-[#1CB1E1] text-white font-bold px-8 py-4 rounded-xl text-sm uppercase tracking-wider transition-all shadow-lg active:scale-95`}
+          class="bg-[#009EE0] hover:bg-[#1CB1E1] border border-white/20 text-white font-bold px-8 py-4 rounded-xl text-sm uppercase tracking-wider transition-all shadow-lg active:scale-95"
         >
           Cotizar en Línea
         </a>
@@ -37,22 +37,22 @@ import { DESIGN_SYSTEM, CONTACT_INFO } from '../constants.ts';
     </div>
   </section>
 
-  <section class={`${DESIGN_SYSTEM.colors.bgWhite} ${DESIGN_SYSTEM.layouts.sectionPadding}`}>
-    <div class={DESIGN_SYSTEM.layouts.mainGrid}>
+  <section class="bg-white py-20 md:py-28">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
       
       <div class="text-center max-w-3xl mx-auto mb-16">
-        <span class={DESIGN_SYSTEM.textOnLight.subtitle}>Estándar Operativo</span>
-        <h2 class={`${DESIGN_SYSTEM.textOnLight.title} text-3xl md:text-4xl mt-2 mb-4`}>
+        <span class="text-[#009EE0] font-bold uppercase tracking-wider text-sm">Estándar Operativo</span>
+        <h2 class="text-[#00456F] font-black tracking-tight text-3xl md:text-4xl mt-2 mb-4">
           ¿Por qué las gerencias de compras nos eligen?
         </h2>
-        <p class={DESIGN_SYSTEM.textOnLight.paragraph}>
+        <p class="text-slate-600 font-normal leading-relaxed">
           Diseñamos un flujo enfocado exclusivamente en el mercado B2B que elimina la fricción en la cadena de suministro gráfico.
         </p>
       </div>
 
       <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
         
-        <div class="bg-[#F7FAFD] border border-[#91DAEE]/20 p-8 rounded-2xl shadow-sm transition-all hover:shadow-md">
+        <div class="bg-[#F7FAFD] border border-[#91DAEE]/30 p-8 rounded-2xl shadow-sm transition-all hover:shadow-md">
           <div class="w-12 h-12 bg-[#009EE0] rounded-xl flex items-center justify-center text-white text-xl font-bold mb-6">🎯</div>
           <h3 class="text-xl font-bold text-[#00456F] mb-3">Precisión Cromática</h3>
           <p class="text-slate-600 font-normal text-sm leading-relaxed">
@@ -60,7 +60,7 @@ import { DESIGN_SYSTEM, CONTACT_INFO } from '../constants.ts';
           </p>
         </div>
 
-        <div class="bg-[#F7FAFD] border border-[#91DAEE]/20 p-8 rounded-2xl shadow-sm transition-all hover:shadow-md">
+        <div class="bg-[#F7FAFD] border border-[#91DAEE]/30 p-8 rounded-2xl shadow-sm transition-all hover:shadow-md">
           <div class="w-12 h-12 bg-[#009EE0] rounded-xl flex items-center justify-center text-white text-xl font-bold mb-6">📦</div>
           <h3 class="text-xl font-bold text-[#00456F] mb-3">Volúmenes Industriales</h3>
           <p class="text-slate-600 font-normal text-sm leading-relaxed">
@@ -68,7 +68,7 @@ import { DESIGN_SYSTEM, CONTACT_INFO } from '../constants.ts';
           </p>
         </div>
 
-        <div class="bg-[#F7FAFD] border border-[#91DAEE]/20 p-8 rounded-2xl shadow-sm transition-all hover:shadow-md">
+        <div class="bg-[#F7FAFD] border border-[#91DAEE]/30 p-8 rounded-2xl shadow-sm transition-all hover:shadow-md">
           <div class="w-12 h-12 bg-[#009EE0] rounded-xl flex items-center justify-center text-white text-xl font-bold mb-6">💼</div>
           <h3 class="text-xl font-bold text-[#00456F] mb-3">Convenios Corporativos</h3>
           <p class="text-slate-600 font-normal text-sm leading-relaxed">
@@ -80,19 +80,19 @@ import { DESIGN_SYSTEM, CONTACT_INFO } from '../constants.ts';
     </div>
   </section>
 
-  <section class={`${DESIGN_SYSTEM.colors.bgLight} py-20 border-t border-b border-[#91DAEE]/20`}>
-    <div class={`${DESIGN_SYSTEM.layouts.mainGrid} flex flex-col lg:flex-row items-center justify-between gap-10`}>
+  <section class="bg-[#F7FAFD] py-20 border-t border-b border-[#91DAEE]/20">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col lg:flex-row items-center justify-between gap-10">
       <div class="max-w-2xl">
-        <h2 class={`${DESIGN_SYSTEM.textOnLight.title} text-2xl md:text-3xl mb-3`}>
+        <h2 class="text-[#00456F] font-black tracking-tight text-2xl md:text-3xl mb-3">
           ¿Necesita soluciones o desarrollos estructurales a medida?
         </h2>
-        <p class={DESIGN_SYSTEM.textOnLight.paragraph}>
+        <p class="text-slate-600 font-normal leading-relaxed">
           Nuestro equipo técnico analiza los requerimientos volumétricos de su corporación para formular prototipos óptimos que protejan sus productos y su marca.
         </p>
       </div>
       <a 
         href="/sobre-nosotros" 
-        class="bg-[#00456F] hover:bg-[#003454] text-white font-bold px-8 py-4 rounded-xl text-sm uppercase tracking-wider transition-all whitespace-nowrap shadow-md shadow-blue-900/10 active:scale-95"
+        class="bg-[#00456F] hover:bg-[#003454] text-white font-bold px-8 py-4 rounded-xl text-sm uppercase tracking-wider transition-all whitespace-nowrap shadow-md active:scale-95"
       >
         Conocer Infraestructura
       </a>
