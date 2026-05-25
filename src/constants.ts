@@ -9,31 +9,41 @@ export const CONTACT_INFO = {
 };
 
 export const DESIGN_SYSTEM = {
-  // PALETA BLUE STUDIO (Exacta de la imagen)
+  // PALETA BLUE STUDIO EMBAJADORA (#009EE0 manda en áreas grandes)
   colors: {
-    heroBg: "bg-[#00456F]",            // Deep Navy (Primer color)
-    contentBg: "bg-[#F7FAFD]",         // Off-white Blue (Quinto color - Fondo principal)
-    navBg: "bg-[#00456F]/95",          // Navbar
-    accent: "bg-[#009EE0]",            // Primary Blue (Segundo color - Botones)
-    accentHover: "hover:bg-[#1CB1E1]", // Sky Blue (Tercer color)
-    accentText: "text-[#009EE0]",
-    cardBg: "bg-white",                // Tarjetas blancas sobre fondo celeste claro
-    border: "border-[#91DAEE]/30",     // Bordes en celeste suave (Cuarto color)
+    // Fondos de gran impacto con predominancia del azul de marca
+    heroBg: "bg-gradient-to-br from-[#009EE0] via-[#007BB3] to-[#00456F]",
+    navBg: "bg-[#00456F]",
     footerBg: "bg-[#00456F]",
-    textMain: "text-[#00456F]",        // Texto principal en azul profundo
-    textMuted: "text-[#009EE0]",       // Texto secundario
+    
+    // Alternancia de fondos limpios para el cuerpo de la página
+    bgLight: "bg-[#F7FAFD]", 
+    bgWhite: "bg-white",
+    
+    // Componentes de interacción y llamados a la acción
+    brandPrimary: "bg-[#009EE0]",
+    brandHover: "hover:bg-[#1CB1E1]",
+    brandText: "text-[#009EE0]",
+    
+    // Separadores estéticos
+    borderDivider: "border-[#91DAEE]/30",
   },
   
+  // GARANTÍA DE CONTRASTE (Para que nunca más se pierda un texto)
+  textOnLight: {
+    title: "text-[#00456F] font-black tracking-tight",       // Azul profundo y legible
+    paragraph: "text-slate-600 font-normal leading-relaxed", // Gris corporativo oscuro
+    subtitle: "text-[#009EE0] font-bold uppercase tracking-wider text-sm", 
+  },
+  
+  textOnDark: {
+    title: "text-white font-black tracking-tight",
+    paragraph: "text-blue-50/90 font-light leading-relaxed",
+    subtitle: "text-[#91DAEE] font-bold uppercase tracking-widest text-xs",
+  },
+
   layouts: {
     mainGrid: "max-w-7xl mx-auto px-4 sm:px-6 lg:px-8",
-    sectionPadding: "py-20 md:py-24",
-    cardBorder: "border border-[#91DAEE]/40 rounded-xl shadow-sm transition-all duration-200"
-  },
-  
-  typography: {
-    tagline: "text-[#009EE0] font-bold tracking-widest text-xs uppercase block mb-3",
-    h1: "text-4xl md:text-5xl lg:text-6xl font-black tracking-tight text-white mb-6 leading-[1.1]",
-    heroParagraph: "text-blue-50/90 text-base md:text-lg font-light leading-relaxed max-w-2xl mb-8",
-    sectionHeading: "text-2xl md:text-3xl font-bold text-[#00456F] tracking-tight mb-4"
+    sectionPadding: "py-20 md:py-28",
   }
 };

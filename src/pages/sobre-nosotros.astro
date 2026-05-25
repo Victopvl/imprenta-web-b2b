@@ -1,60 +1,67 @@
 ---
 // src/pages/sobre-nosotros.astro
 import Layout from '../layouts/Layout.astro';
-import HeroPage from '../components/HeroPage.astro';
 import { DESIGN_SYSTEM } from '../constants.ts';
-
-const title = "Sobre Nosotros - Infraestructura Industrial y Capacidad";
-const description = "Conoce nuestra planta de producción gráfica automatizada.";
 ---
 
-<Layout title={title} description={description}>
+<Layout title="Infraestructura Escala Industrial">
+  
+  <section class={`${DESIGN_SYSTEM.colors.heroBg} relative overflow-hidden py-24 md:py-32 text-center`}>
+    <div class="absolute inset-0 bg-[radial-gradient(#91DAEE_1px,transparent_1px)] [background-size:16px_16px] opacity-15"></div>
+    <div class={`${DESIGN_SYSTEM.layouts.mainGrid} relative z-10 max-w-3xl`}>
+      <span class={DESIGN_SYSTEM.textOnDark.subtitle}>Socio de Suministro Gráfico B2B</span>
+      <h1 class="text-4xl md:text-5xl lg:text-6xl font-black text-white mt-3 mb-6 tracking-tight">
+        Soluciones Gráficas a Gran Escala
+      </h1>
+      <p class={DESIGN_SYSTEM.textOnDark.paragraph + " text-base md:text-lg"}>
+        Conozca los pilares logísticos y tecnológicos que nos permiten respaldar las operaciones comerciales de las principales compañías del país.
+      </p>
+    </div>
+  </section>
 
-  <HeroPage 
-    tagline="Socio de Suministro Gráfico B2B"
-    title="Infraestructura instalada para responder bajo alta demanda volumétrica."
-    description="No operamos como una imprenta rápida tradicional. Nos estructuramos para resolver las cadenas de abastecimiento gráfico de grandes compañías con cero margen de error."
-  />
-
-  <section class={`${DESIGN_SYSTEM.colors.contentBg} text-slate-300 border-t border-slate-900`}>
-    <div class={`${DESIGN_SYSTEM.layouts.mainGrid} ${DESIGN_SYSTEM.layouts.sectionPadding}`}>
-      <div class="grid lg:grid-cols-2 gap-12 lg:gap-20 items-start">
-        <div>
-          <h2 class="text-3xl font-black tracking-tight text-white mb-6">
-            Procesos automatizados desde la orden hasta el despacho
+  <section class={`${DESIGN_SYSTEM.colors.bgLight} ${DESIGN_SYSTEM.layouts.sectionPadding}`}>
+    <div class={DESIGN_SYSTEM.layouts.mainGrid}>
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
+        
+        <div class="space-y-6">
+          <span class={DESIGN_SYSTEM.textOnLight.subtitle}>Infraestructura y Respaldo</span>
+          <h2 class={`${DESIGN_SYSTEM.textOnLight.title} text-3xl md:text-4xl lg:text-5xl leading-tight`}>
+            Capacidad instalada para responder bajo presión volumétrica.
           </h2>
-          <p class="text-base leading-relaxed mb-6 font-light text-slate-300">
-            Cada proceso está respaldado por maquinaria industrial de última generación y flujos optimizados bajo normas internacionales de calidad.
+          <p class={`${DESIGN_SYSTEM.textOnLight.paragraph} text-base md:text-lg`}>
+            No operamos como una imprenta rápida tradicional. Nos estructuramos de manera logística para resolver las cadenas de abastecimiento gráfico de grandes corporaciones, garantizando consistencia absoluta de marca.
           </p>
-          <div class="grid grid-cols-2 gap-6 border-t border-slate-800 pt-8">
+          
+          <div class="grid grid-cols-2 gap-6 pt-8 border-t border-[#91DAEE]/40">
             <div>
-              <span class="block text-3xl font-black text-white tracking-tight mb-1">100%</span>
-              <span class="text-xs uppercase tracking-wider font-bold text-slate-500 block">Fidelidad Pantone</span>
+              <p class="text-4xl md:text-5xl font-black text-[#009EE0] tracking-tight">100%</p>
+              <p class="text-xs uppercase tracking-wider font-bold text-[#00456F] mt-1.5">Fidelidad Pantone</p>
             </div>
             <div>
-              <span class={`block text-3xl font-black ${DESIGN_SYSTEM.colors.accentText} tracking-tight mb-1`}>24/7</span>
-              <span class="text-xs uppercase tracking-wider font-bold text-slate-500 block">Monitoreo de Pedidos</span>
+              <p class="text-4xl md:text-5xl font-black text-[#009EE0] tracking-tight">24/7</p>
+              <p class="text-xs uppercase tracking-wider font-bold text-[#00456F] mt-1.5">Soporte Logístico</p>
             </div>
           </div>
         </div>
 
         <div class="space-y-4">
           {[
-            { id: "01", t: "Tecnología de Prensa Automatizada", d: "Prensas capaces de procesar miles de impresiones por hora con secado inmediato." },
-            { id: "02", t: "Estandarización y Gestión del Color", d: "Calibración densitométrica rigurosa en cualquier soporte o sustrato." },
-            { id: "03", t: "Logística Corporativa Integrada", d: "Despachamos de forma consolidada directamente en tus bodegas o locaciones." }
-          ].map(item => (
-            <div class="bg-slate-900/40 p-6 rounded-xl border border-slate-800/40">
-              <div class="flex items-start gap-4">
-                <div class={`w-8 h-8 rounded-md bg-[#00D4B2]/10 flex items-center justify-center ${DESIGN_SYSTEM.colors.accentText} font-bold shrink-0`}>{item.id}</div>
-                <div>
-                  <h3 class="text-lg font-bold text-white mb-2">{item.t}</h3>
-                  <p class="text-slate-400 text-sm leading-relaxed font-light">{item.d}</p>
-                </div>
+            { num: "01", title: "Tecnología de Prensa Offset e Inyección", desc: "Trenes de impresión automatizados adaptados para altas tiradas y catálogos de alta paginación." },
+            { num: "02", title: "Estandarización ISO y Control de Color", desc: "Calibración densitométrica rigurosa de sustratos para mantener la consistencia cromática exacta corporativa." },
+            { num: "03", title: "Logística Integrada de Despacho", desc: "Flota centralizada y empaques industriales consolidados bajo estrictas ventanas horarias B2B." }
+          ].map((item) => (
+            <div class="bg-white border border-[#91DAEE]/30 p-6 rounded-2xl shadow-sm flex gap-5 items-start hover:shadow-md hover:border-[#009EE0]/30 transition-all duration-200">
+              <span class="text-xs font-mono font-bold bg-[#F7FAFD] text-[#009EE0] px-3 py-2 rounded-xl border border-[#91DAEE]/30 shrink-0">
+                {item.num}
+              </span>
+              <div>
+                <h3 class="font-bold text-[#00456F] text-base mb-1.5">{item.title}</h3>
+                <p class="text-slate-500 text-sm font-light leading-relaxed">{item.desc}</p>
               </div>
             </div>
           ))}
         </div>
+
       </div>
     </div>
   </section>
