@@ -9,4 +9,4 @@ export const CONTACT_INFO = {
 };
 
 // TODO: Reemplazar por tu access key real de Web3Forms (gratis en https://web3forms.com)
-export const WEB3FORMS_ACCESS_KEY = "TU-ACCESS-KEY-AQUI";
+export const WEB3FORMS_ACCESS_KEY = "4fdda8c2-f69f-4cbb-9129-bb877279585e";
