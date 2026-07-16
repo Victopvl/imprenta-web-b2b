@@ -1,0 +1,10 @@
+diff a/src/pages/sobre-nosotros.astro b/src/pages/sobre-nosotros.astro	(rejected hunks)
+@@ -3,7 +3,7 @@
+ import Layout from '../layouts/Layout.astro';
+ ---
+ 
+-<Layout title="Infraestructura Escala Industrial">
++<Layout title="Infraestructura Escala Industrial" description="Más de 25 años de experiencia en soluciones gráficas a gran escala para empresas: impresión corporativa, copiado industrial y proyectos a medida.">
+   
+   <section class="bg-gradient-to-br from-[#009EE0] via-[#007BB3] to-[#00456F] relative overflow-hidden py-24 md:py-32 text-center">
+     <div class="absolute inset-0 bg-[radial-gradient(#91DAEE_1px,transparent_1px)] [background-size:16px_16px] opacity-15"></div>

@@ -1,0 +1,12 @@
+diff a/src/constants.ts b/src/constants.ts	(rejected hunks)
+@@ -6,4 +6,7 @@ export const CONTACT_INFO = {
+   email: "mvallejos@vatagraphic.cl",
+   whatsappUrl: "https://wa.me/56998651656?text=Hola,%20vengo%20de%20la%20página%20web...",
+   address: "Santiago, Chile",
+-};
+\ No newline at end of file
++};
++
++// TODO: Reemplazar por tu access key real de Web3Forms (gratis en https://web3forms.com)
++export const WEB3FORMS_ACCESS_KEY = "TU-ACCESS-KEY-AQUI";
+\ No newline at end of file

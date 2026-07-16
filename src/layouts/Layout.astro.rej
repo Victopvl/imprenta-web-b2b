@@ -1,0 +1,10 @@
+diff a/src/layouts/Layout.astro b/src/layouts/Layout.astro	(rejected hunks)
+@@ -28,6 +28,8 @@ const navItems = [
+     <meta charset="UTF-8" />
+     <meta name="viewport" content="width=device-width" />
+     <title>{title} | {CONTACT_INFO.companyName}</title>
++    <meta name="description" content={description} />
++    <link rel="canonical" href={`https://victopvl.github.io/imprenta-web-b2b${pathname}`} />
+     <style>
+       body {
+         font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
