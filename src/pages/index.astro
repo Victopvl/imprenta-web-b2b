@@ -2,9 +2,10 @@
 // src/pages/index.astro
 import Layout from '../layouts/Layout.astro';
 import { CONTACT_INFO } from '../constants.ts';
+import { clientesDestacados, testimonios } from '../data/pruebaSocial.ts';
 ---
 
-<Layout title="Inicio | Imprenta y Regalos Corporativos">
+<Layout title="Inicio | Imprenta y Regalos Corporativos" description="Imprenta B2B en Chile: papelería corporativa, regalos empresariales y volúmenes industriales con facturación inmediata. Cotiza en línea.">
   
   <section class="bg-gradient-to-br from-[#009EE0] via-[#007BB3] to-[#00456F] relative overflow-hidden py-24 md:py-36 text-center">
     <div class="absolute inset-0 bg-[radial-gradient(#91DAEE_1px,transparent_1px)] [background-size:16px_16px] opacity-15"></div>
@@ -42,7 +43,7 @@ Encuentra aquí la alta gama en soluciones gráficas integrales con un catálogo
       <div class="text-center max-w-3xl mx-auto mb-16">
         <span class="text-[#009EE0] font-bold uppercase tracking-wider text-sm">Estándar Operativo</span>
         <h2 class="text-[#00456F] font-black tracking-tight text-3xl md:text-4xl mt-2 mb-4">
-          ¿Por qué las grandes corporraciones nos eligen?
+          ¿Por qué las grandes corporaciones nos eligen?
         </h2>
         <p class="text-slate-600 font-normal leading-relaxed">
           Diseñamos un flujo enfocado exclusivamente en el mercado B2B que elimina la fricción en la cadena de suministro gráfico.
@@ -62,7 +63,9 @@ Contamos con un amplio catálogo que integra desde papelería técnica hasta reg
           <div class="w-12 h-12 bg-[#009EE0] rounded-xl flex items-center justify-center text-white text-xl font-bold mb-6">📦</div>
           <h3 class="text-xl font-bold text-[#00456F] mb-3">Volúmenes Industriales</h3>
           <p class="text-slate-600 font-normal text-sm leading-relaxed">
-Estamos preparados para gestionar tiradas masivas de impresión y copiado con absoluta precisión. Nuestra red operativa permite absorber pedidos de gran volumen bajo estándares técnicos rigurosos, garantizando calidad constante en cada pieza producida.        </div>
+Estamos preparados para gestionar tiradas masivas de impresión y copiado con absoluta precisión. Nuestra red operativa permite absorber pedidos de gran volumen bajo estándares técnicos rigurosos, garantizando calidad constante en cada pieza producida.
+          </p>
+        </div>
 
         <div class="bg-[#F7FAFD] border border-[#91DAEE]/30 p-8 rounded-2xl shadow-sm transition-all hover:shadow-md">
           <div class="w-12 h-12 bg-[#009EE0] rounded-xl flex items-center justify-center text-white text-xl font-bold mb-6">💼</div>
@@ -71,6 +74,29 @@ Estamos preparados para gestionar tiradas masivas de impresión y copiado con ab
 Somos una empresa diseñada para trabajar con empresas. Ofrecemos facturación inmediata, convenios corporativos y estados de pago que se ajustan a los procesos administrativos de grandes instituciones y gerencias de compras.          </p>
         </div>
 
+      </div>
+    </div>
+  </section>
+
+  <section class="bg-white py-16 border-t border-slate-100">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <p class="text-center text-xs font-bold uppercase tracking-widest text-slate-400 mb-8">
+        Empresas que confían en nosotros
+      </p>
+      <div class="flex flex-wrap justify-center items-center gap-x-12 gap-y-6 mb-20 opacity-70">
+        {clientesDestacados.map((cliente) => (
+          <span class="text-slate-400 font-bold text-lg tracking-tight">{cliente}</span>
+        ))}
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+        {testimonios.map((t) => (
+          <div class="bg-[#F7FAFD] border border-[#91DAEE]/30 p-6 rounded-2xl">
+            <p class="text-slate-600 text-sm leading-relaxed italic mb-4">"{t.texto}"</p>
+            <p class="font-bold text-[#00456F] text-sm">{t.nombre}</p>
+            <p class="text-slate-500 text-xs">{t.cargo}</p>
+          </div>
+        ))}
       </div>
     </div>
   </section>

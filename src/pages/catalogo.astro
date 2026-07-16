@@ -3,9 +3,10 @@
 import Layout from '../layouts/Layout.astro';
 // IMPORTAMOS LOS DATOS DESDE TU ARCHIVO AMIGABLE:
 import { catalogData } from '../data/productos';
+import { CONTACT_INFO } from '../constants.ts';
 ---
 
-<Layout title="Catálogo Técnico de Productos">
+<Layout title="Catálogo Técnico de Productos" description="Explora nuestro catálogo B2B de papelería técnica, regalos corporativos y volúmenes industriales. Consulta materiales, acabados y MOQ.">
   
   <section class="bg-gradient-to-br from-[#009EE0] via-[#007BB3] to-[#00456F] relative overflow-hidden py-24 md:py-32 text-center">
     <div class="absolute inset-0 bg-[radial-gradient(#91DAEE_1px,transparent_1px)] [background-size:16px_16px] opacity-15"></div>
@@ -26,6 +27,7 @@ import { catalogData } from '../data/productos';
       <div class="bg-white border border-[#91DAEE]/40 rounded-2xl p-6 mb-16 shadow-xl shadow-blue-900/5 -translate-y-12 relative z-20">
         <div class="flex flex-col lg:flex-row gap-5 items-center justify-between">
           <div class="w-full lg:max-w-md relative">
+            <label for="search-input" class="sr-only">Buscar producto</label>
             <span class="absolute inset-y-0 left-0 pl-3.5 flex items-center text-slate-400">🔍</span>
             <input 
               type="text" 
@@ -46,6 +48,18 @@ import { catalogData } from '../data/productos';
              ))}
           </div>
         </div>
+      </div>
+
+      <div id="no-results" class="hidden text-center py-16">
+        <p class="text-slate-600 font-medium mb-4">No encontramos productos con ese término. Cuéntanos qué necesitas y te ayudamos directamente.</p>
+        <a
+          href={CONTACT_INFO.whatsappUrl}
+          target="_blank"
+          rel="noopener noreferrer"
+          class="inline-block bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-xs uppercase tracking-wider px-6 py-3 rounded-xl transition-all active:scale-95"
+        >
+          Consultar por WhatsApp
+        </a>
       </div>
 
       <div class="space-y-24" id="catalog-sections-container">
@@ -99,6 +113,15 @@ import { catalogData } from '../data/productos';
                         {p.moq}
                       </span>
                     </div>
+
+                    <a
+                      href={`https://wa.me/${CONTACT_INFO.phone.replace('+', '')}?text=${encodeURIComponent(`Hola, quiero cotizar: ${p.nombre}`)}`}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      class="block text-center bg-[#009EE0] hover:bg-[#1CB1E1] text-white font-bold text-xs uppercase tracking-wider py-3 rounded-xl transition-all active:scale-95"
+                    >
+                      Cotizar este producto
+                    </a>
                   </div>
 
                 </div>
@@ -117,10 +140,12 @@ import { catalogData } from '../data/productos';
       const searchInput = document.getElementById('search-input');
       const filterButtons = document.querySelectorAll('.category-btn');
       const sections = document.querySelectorAll('.category-section');
+      const noResults = document.getElementById('no-results');
       let currentCategory = 'all';
 
       function filterCatalog() {
         const query = searchInput.value.toLowerCase().trim();
+        let totalVisible = 0;
 
         sections.forEach(section => {
           const catId = section.getAttribute('data-category');
@@ -142,10 +167,13 @@ import { catalogData } from '../data/productos';
 
           if (matchesCategory && visibleCardsInSection > 0) {
             section.style.display = '';
+            totalVisible += visibleCardsInSection;
           } else {
             section.style.display = 'none';
           }
         });
+
+        noResults.classList.toggle('hidden', totalVisible > 0);
       }
 
       filterButtons.forEach(btn => {

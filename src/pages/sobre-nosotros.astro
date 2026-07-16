@@ -3,7 +3,7 @@
 import Layout from '../layouts/Layout.astro';
 ---
 
-<Layout title="Infraestructura Escala Industrial">
+<Layout title="Infraestructura Escala Industrial" description="Más de 25 años de experiencia en soluciones gráficas a gran escala para empresas: impresión corporativa, copiado industrial y proyectos a medida.">
   
   <section class="bg-gradient-to-br from-[#009EE0] via-[#007BB3] to-[#00456F] relative overflow-hidden py-24 md:py-32 text-center">
     <div class="absolute inset-0 bg-[radial-gradient(#91DAEE_1px,transparent_1px)] [background-size:16px_16px] opacity-15"></div>
@@ -59,6 +59,31 @@ En VataGraphic nos convertimos en el aliado estratégico de tus proyectos de imp
           ))}
         </div>
 
+      </div>
+    </div>
+  </section>
+
+  <section class="bg-[#00456F] py-16 text-center">
+    <div class="max-w-2xl mx-auto px-4 sm:px-6 lg:px-8">
+      <h2 class="text-white font-black tracking-tight text-2xl md:text-3xl mb-3">
+        ¿Listo para llevar tu proyecto a producción?
+      </h2>
+      <p class="text-blue-100/80 font-light leading-relaxed mb-8">
+        Revisa nuestro catálogo técnico o conversa directo con un ejecutivo para resolver tu próxima cotización.
+      </p>
+      <div class="flex flex-wrap justify-center gap-4">
+        <a
+          href={`${import.meta.env.BASE_URL}catalogo`}
+          class="bg-white text-[#00456F] hover:bg-[#F7FAFD] font-bold px-8 py-4 rounded-xl text-sm uppercase tracking-wider transition-all shadow-lg active:scale-95"
+        >
+          Ver Catálogo
+        </a>
+        <a
+          href={`${import.meta.env.BASE_URL}cotizaciones`}
+          class="bg-[#009EE0] hover:bg-[#1CB1E1] border border-white/20 text-white font-bold px-8 py-4 rounded-xl text-sm uppercase tracking-wider transition-all shadow-lg active:scale-95"
+        >
+          Solicitar Cotización
+        </a>
       </div>
     </div>
   </section>
