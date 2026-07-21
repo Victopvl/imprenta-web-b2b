@@ -1,0 +1,766 @@
+diff --git a/google-apps-script/Code.gs b/google-apps-script/Code.gs
+new file mode 100644
+index 0000000..7fc856f
+--- /dev/null
++++ b/google-apps-script/Code.gs
+@@ -0,0 +1,97 @@
++/**
++ * VataGraphic - Backend gratuito de Cartera de Clientes
++ * Convierte un Google Sheet en una base de datos simple para el formulario
++ * de cotizaciones y el panel /admin del sitio web.
++ *
++ * INSTRUCCIONES DE INSTALACIÓN:
++ * 1. Crea un Google Sheet nuevo y llámalo "VataGraphic - Cartera de Clientes".
++ * 2. En la primera hoja, cambia el nombre a "Leads" y pon estos encabezados
++ *    exactos en la fila 1 (columnas A a M):
++ *    ID | Fecha | Nombre | Empresa | Correo | Telefono | Rubro | ComoConocio |
++ *    ProductoInteres | Mensaje | Estado | ProductoVendido | MontoVenta | FechaCierre
++ * 3. Ve a Extensiones > Apps Script, borra el contenido y pega este archivo completo.
++ * 4. Cambia el valor de SECRET_TOKEN más abajo por una clave propia (cualquier texto).
++ * 5. Haz clic en "Implementar" > "Nueva implementación" > tipo "Aplicación web".
++ *    - Ejecutar como: Yo (tu cuenta)
++ *    - Quién tiene acceso: Cualquier usuario
++ * 6. Copia la URL que te entrega (termina en /exec) y pégala en src/constants.ts
++ *    como GOOGLE_SCRIPT_URL, y el mismo texto de SECRET_TOKEN como ADMIN_SECRET.
++ */
++
++const SHEET_NAME = "Leads";
++const SECRET_TOKEN = "cambia-esta-clave"; // TODO: reemplazar por una clave propia
++
++function doPost(e) {
++  const data = JSON.parse(e.postData.contents);
++  const sheet = SpreadsheetApp.getActiveSpreadsheet().getSheetByName(SHEET_NAME);
++
++  if (data.action === "updateStatus") {
++    return updateLeadStatus(sheet, data);
++  }
++
++  return createLead(sheet, data);
++}
++
++function doGet(e) {
++  if (e.parameter.token !== SECRET_TOKEN) {
++    return jsonResponse({ success: false, error: "No autorizado" });
++  }
++  const sheet = SpreadsheetApp.getActiveSpreadsheet().getSheetByName(SHEET_NAME);
++  const rows = sheet.getDataRange().getValues();
++  const headers = rows.shift();
++
++  const leads = rows.map((row) => {
++    const lead = {};
++    headers.forEach((header, i) => (lead[header] = row[i]));
++    return lead;
++  });
++
++  return jsonResponse({ success: true, leads: leads.reverse() });
++}
++
++function createLead(sheet, data) {
++  const id = Utilities.getUuid();
++  sheet.appendRow([
++    id,
++    new Date(),
++    data.Nombre || "",
++    data.Empresa || "",
++    data.Correo || "",
++    data.Telefono || "",
++    data.Rubro || "",
++    data.ComoConocio || "",
++    data.ProductoInteres || "",
++    data.Mensaje || "",
++    "Nuevo",
++    "",
++    "",
++    "",
++  ]);
++  return jsonResponse({ success: true, id: id });
++}
++
++function updateLeadStatus(sheet, data) {
++  if (data.token !== SECRET_TOKEN) {
++    return jsonResponse({ success: false, error: "No autorizado" });
++  }
++  const values = sheet.getDataRange().getValues();
++  const idColumn = 0; // Columna A = ID
++
++  for (let i = 1; i < values.length; i++) {
++    if (values[i][idColumn] === data.id) {
++      const rowNumber = i + 1;
++      sheet.getRange(rowNumber, 11).setValue(data.Estado || values[i][10]); // Estado
++      sheet.getRange(rowNumber, 12).setValue(data.ProductoVendido || "");
++      sheet.getRange(rowNumber, 13).setValue(data.MontoVenta || "");
++      sheet.getRange(rowNumber, 14).setValue(data.Estado === "Vendido" ? new Date() : "");
++      return jsonResponse({ success: true });
++    }
++  }
++  return jsonResponse({ success: false, error: "Lead no encontrado" });
++}
++
++function jsonResponse(obj) {
++  return ContentService.createTextOutput(JSON.stringify(obj)).setMimeType(
++    ContentService.MimeType.JSON
++  );
++}
+diff --git a/src/constants.ts b/src/constants.ts
+index c93fe7a..7f7cecd 100644
+--- a/src/constants.ts
++++ b/src/constants.ts
+@@ -6,4 +6,14 @@ export const CONTACT_INFO = {
+   email: "mvallejos@vatagraphic.cl",
+   whatsappUrl: "https://wa.me/56998651656?text=Hola,%20vengo%20de%20la%20página%20web...",
+   address: "Santiago, Chile",
+-};
+\ No newline at end of file
++};
++
++// TODO: Reemplazar por tu access key real de Web3Forms (gratis en https://web3forms.com)
++export const WEB3FORMS_ACCESS_KEY = "TU-ACCESS-KEY-AQUI";
++
++// TODO: Pegar aquí la URL de tu Google Apps Script (termina en /exec) una vez desplegada.
++// Ver instrucciones en google-apps-script/Code.gs
++export const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbzspmlz_3bzeb2LAPdmsBrfSDbZpwxozIS-R483V8ShKZYIA0Trwg6JVL-aXTUJAHE8/exec";
++
++// Debe ser EXACTAMENTE la misma clave que pusiste en SECRET_TOKEN dentro de Code.gs
++export const ADMIN_SECRET = "CHAGTV06";
+\ No newline at end of file
+diff --git a/src/data/pruebaSocial.ts b/src/data/pruebaSocial.ts
+new file mode 100644
+index 0000000..65a4415
+--- /dev/null
++++ b/src/data/pruebaSocial.ts
+@@ -0,0 +1,28 @@
++// src/data/pruebaSocial.ts
++// TODO: Reemplazar estos datos de ejemplo por clientes y testimonios reales.
++// Mientras no tengas contenido real, esta sección se muestra con placeholders.
++
++export const clientesDestacados = [
++  "Empresa Cliente 1",
++  "Empresa Cliente 2",
++  "Empresa Cliente 3",
++  "Empresa Cliente 4",
++];
++
++export const testimonios = [
++  {
++    nombre: "Nombre Apellido",
++    cargo: "Cargo, Empresa",
++    texto: "Espacio para una cita real de un cliente satisfecho sobre tiempos de entrega, calidad o atención.",
++  },
++  {
++    nombre: "Nombre Apellido",
++    cargo: "Cargo, Empresa",
++    texto: "Espacio para una cita real de un cliente satisfecho sobre tiempos de entrega, calidad o atención.",
++  },
++  {
++    nombre: "Nombre Apellido",
++    cargo: "Cargo, Empresa",
++    texto: "Espacio para una cita real de un cliente satisfecho sobre tiempos de entrega, calidad o atención.",
++  },
++];
+diff --git a/src/layouts/Layout.astro b/src/layouts/Layout.astro
+index 8997329..481d966 100644
+--- a/src/layouts/Layout.astro
++++ b/src/layouts/Layout.astro
+@@ -28,6 +28,8 @@ const navItems = [
+     <meta charset="UTF-8" />
+     <meta name="viewport" content="width=device-width" />
+     <title>{title} | {CONTACT_INFO.companyName}</title>
++    <meta name="description" content={description} />
++    <link rel="canonical" href={`https://victopvl.github.io/imprenta-web-b2b${pathname}`} />
+     <style>
+       body {
+         font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+diff --git a/src/pages/admin.astro b/src/pages/admin.astro
+new file mode 100644
+index 0000000..5992491
+--- /dev/null
++++ b/src/pages/admin.astro
+@@ -0,0 +1,235 @@
++---
++// src/pages/admin.astro
++// Panel privado (no está en el menú de navegación, solo accesible por URL directa).
++import Layout from '../layouts/Layout.astro';
++import { GOOGLE_SCRIPT_URL } from '../constants.ts';
++---
++
++<Layout title="Panel de Cotizaciones" description="Panel privado de gestión de cotizaciones.">
++  <section class="py-12 md:py-16 bg-[#F7FAFD] min-h-[70vh]">
++    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
++
++      <div id="auth-gate" class="max-w-sm mx-auto bg-white border border-[#91DAEE]/30 rounded-2xl p-8 shadow-sm text-center">
++        <h1 class="text-[#00456F] font-black text-xl mb-2">🔒 Panel Privado</h1>
++        <p class="text-slate-500 text-sm mb-6">Ingresa la clave para ver la cartera de clientes.</p>
++        <input
++          type="password"
++          id="secret-input"
++          placeholder="Clave de acceso"
++          class="w-full bg-[#F7FAFD] border border-slate-300 rounded-xl px-4 py-3 text-sm text-center outline-none focus:border-[#009EE0] focus:ring-2 focus:ring-[#009EE0]/20 mb-3"
++        />
++        <button id="auth-btn" class="w-full bg-[#009EE0] hover:bg-[#1CB1E1] text-white font-bold py-3 rounded-xl text-sm uppercase tracking-wider transition-all active:scale-95">
++          Entrar
++        </button>
++        <p id="auth-error" class="text-red-600 text-xs mt-3 hidden">Clave incorrecta o error de conexión.</p>
++      </div>
++
++      <div id="dashboard" class="hidden">
++
++        <div class="flex items-center justify-between mb-8">
++          <h1 class="text-[#00456F] font-black text-2xl md:text-3xl tracking-tight">Cartera de Clientes</h1>
++          <button id="refresh-btn" class="text-xs font-bold uppercase tracking-wider text-[#009EE0] hover:text-[#1CB1E1] border border-[#91DAEE]/40 px-4 py-2 rounded-xl transition-all">
++            ↻ Actualizar
++          </button>
++        </div>
++
++        <div class="grid grid-cols-2 lg:grid-cols-4 gap-4 mb-10">
++          <div class="bg-white border border-[#91DAEE]/30 rounded-2xl p-5">
++            <p class="text-3xl font-black text-[#00456F]" id="metric-total">–</p>
++            <p class="text-xs text-slate-500 font-bold uppercase tracking-wider mt-1">Cotizaciones totales</p>
++          </div>
++          <div class="bg-white border border-[#91DAEE]/30 rounded-2xl p-5">
++            <p class="text-3xl font-black text-[#00456F]" id="metric-mes">–</p>
++            <p class="text-xs text-slate-500 font-bold uppercase tracking-wider mt-1">Este mes</p>
++          </div>
++          <div class="bg-white border border-[#91DAEE]/30 rounded-2xl p-5">
++            <p class="text-3xl font-black text-emerald-600" id="metric-vendidos">–</p>
++            <p class="text-xs text-slate-500 font-bold uppercase tracking-wider mt-1">Vendidas (tasa <span id="metric-tasa">–</span>)</p>
++          </div>
++          <div class="bg-white border border-[#91DAEE]/30 rounded-2xl p-5">
++            <p class="text-3xl font-black text-[#009EE0]" id="metric-ingresos">–</p>
++            <p class="text-xs text-slate-500 font-bold uppercase tracking-wider mt-1">Ingresos registrados</p>
++          </div>
++        </div>
++
++        <div class="bg-white border border-[#91DAEE]/30 rounded-2xl overflow-hidden">
++          <table class="w-full text-sm">
++            <thead class="bg-[#00456F] text-white text-left">
++              <tr>
++                <th class="p-4 font-bold">Fecha</th>
++                <th class="p-4 font-bold">Cliente</th>
++                <th class="p-4 font-bold">Producto interés</th>
++                <th class="p-4 font-bold">Estado</th>
++                <th class="p-4 font-bold">Acciones</th>
++              </tr>
++            </thead>
++            <tbody id="leads-tbody">
++              <tr><td colspan="5" class="p-6 text-center text-slate-400">Cargando...</td></tr>
++            </tbody>
++          </table>
++        </div>
++
++      </div>
++    </div>
++  </section>
++
++  <script is:inline define:vars={{ GOOGLE_SCRIPT_URL }}>
++    document.addEventListener('DOMContentLoaded', () => {
++      const authGate = document.getElementById('auth-gate');
++      const dashboard = document.getElementById('dashboard');
++      const secretInput = document.getElementById('secret-input');
++      const authBtn = document.getElementById('auth-btn');
++      const authError = document.getElementById('auth-error');
++      const refreshBtn = document.getElementById('refresh-btn');
++      const tbody = document.getElementById('leads-tbody');
++
++      const badgeClasses = {
++        Nuevo: 'bg-blue-100 text-blue-700',
++        Cotizado: 'bg-amber-100 text-amber-700',
++        Vendido: 'bg-emerald-100 text-emerald-700',
++        Perdido: 'bg-slate-200 text-slate-500',
++      };
++
++      function getToken() {
++        return sessionStorage.getItem('vg_admin_token') || '';
++      }
++
++      async function loadLeads() {
++        const token = getToken();
++        if (!GOOGLE_SCRIPT_URL || !GOOGLE_SCRIPT_URL.startsWith('http')) {
++          tbody.innerHTML = '<tr><td colspan="5" class="p-6 text-center text-red-500">Falta configurar GOOGLE_SCRIPT_URL en constants.ts</td></tr>';
++          return;
++        }
++        try {
++          const res = await fetch(`${GOOGLE_SCRIPT_URL}?token=${encodeURIComponent(token)}`);
++          const data = await res.json();
++
++          if (!data.success) {
++            authError.classList.remove('hidden');
++            authGate.classList.remove('hidden');
++            dashboard.classList.add('hidden');
++            sessionStorage.removeItem('vg_admin_token');
++            return;
++          }
++
++          authGate.classList.add('hidden');
++          dashboard.classList.remove('hidden');
++          renderLeads(data.leads || []);
++        } catch (err) {
++          authError.textContent = 'Error de conexión con la base de datos.';
++          authError.classList.remove('hidden');
++        }
++      }
++
++      function renderLeads(leads) {
++        const now = new Date();
++        const thisMonth = leads.filter((l) => {
++          const d = new Date(l.Fecha);
++          return d.getMonth() === now.getMonth() && d.getFullYear() === now.getFullYear();
++        });
++        const vendidos = leads.filter((l) => l.Estado === 'Vendido');
++        const ingresos = vendidos.reduce((sum, l) => sum + (parseFloat(l.MontoVenta) || 0), 0);
++        const tasa = leads.length ? Math.round((vendidos.length / leads.length) * 100) : 0;
++
++        document.getElementById('metric-total').textContent = leads.length;
++        document.getElementById('metric-mes').textContent = thisMonth.length;
++        document.getElementById('metric-vendidos').textContent = vendidos.length;
++        document.getElementById('metric-tasa').textContent = `${tasa}%`;
++        document.getElementById('metric-ingresos').textContent = `$${ingresos.toLocaleString('es-CL')}`;
++
++        if (!leads.length) {
++          tbody.innerHTML = '<tr><td colspan="5" class="p-6 text-center text-slate-400">Aún no hay cotizaciones registradas.</td></tr>';
++          return;
++        }
++
++        tbody.innerHTML = leads
++          .map((lead, idx) => {
++            const fecha = lead.Fecha ? new Date(lead.Fecha).toLocaleDateString('es-CL') : '-';
++            const estado = lead.Estado || 'Nuevo';
++            const badge = badgeClasses[estado] || badgeClasses.Nuevo;
++            return `
++              <tr class="border-t border-slate-100 align-top">
++                <td class="p-4 text-slate-500 whitespace-nowrap">${fecha}</td>
++                <td class="p-4">
++                  <p class="font-bold text-[#00456F]">${lead.Nombre || '-'}</p>
++                  <p class="text-xs text-slate-500">${lead.Empresa || ''} ${lead.Telefono ? '· ' + lead.Telefono : ''}</p>
++                </td>
++                <td class="p-4 text-slate-600">${lead.ProductoInteres || '-'}</td>
++                <td class="p-4">
++                  <span class="text-xs font-bold px-3 py-1 rounded-full ${badge}">${estado}</span>
++                </td>
++                <td class="p-4">
++                  <div class="flex flex-col gap-2 min-w-[200px]" id="actions-${idx}">
++                    <div class="flex gap-2">
++                      <button data-idx="${idx}" class="btn-vendido text-[10px] font-bold uppercase bg-emerald-600 hover:bg-emerald-500 text-white px-3 py-2 rounded-lg transition-all">Marcar vendida</button>
++                      <button data-idx="${idx}" data-id="${lead.ID}" class="btn-perdido text-[10px] font-bold uppercase bg-slate-200 hover:bg-slate-300 text-slate-600 px-3 py-2 rounded-lg transition-all">Perdida</button>
++                    </div>
++                    <div class="hidden flex-col gap-1.5" id="venta-form-${idx}">
++                      <input type="text" placeholder="Producto vendido" id="producto-${idx}" class="text-xs border border-slate-300 rounded-lg px-2 py-1.5" />
++                      <input type="number" placeholder="Monto ($)" id="monto-${idx}" class="text-xs border border-slate-300 rounded-lg px-2 py-1.5" />
++                      <button data-idx="${idx}" data-id="${lead.ID}" class="btn-confirmar-venta text-[10px] font-bold uppercase bg-[#009EE0] hover:bg-[#1CB1E1] text-white px-3 py-1.5 rounded-lg transition-all">Confirmar venta</button>
++                    </div>
++                  </div>
++                </td>
++              </tr>
++            `;
++          })
++          .join('');
++
++        document.querySelectorAll('.btn-vendido').forEach((btn) => {
++          btn.addEventListener('click', () => {
++            document.getElementById(`venta-form-${btn.dataset.idx}`).classList.remove('hidden');
++            document.getElementById(`venta-form-${btn.dataset.idx}`).classList.add('flex');
++          });
++        });
++
++        document.querySelectorAll('.btn-perdido').forEach((btn) => {
++          btn.addEventListener('click', () => updateStatus(btn.dataset.id, 'Perdido'));
++        });
++
++        document.querySelectorAll('.btn-confirmar-venta').forEach((btn) => {
++          btn.addEventListener('click', () => {
++            const idx = btn.dataset.idx;
++            const producto = document.getElementById(`producto-${idx}`).value;
++            const monto = document.getElementById(`monto-${idx}`).value;
++            updateStatus(btn.dataset.id, 'Vendido', producto, monto);
++          });
++        });
++      }
++
++      async function updateStatus(id, estado, productoVendido = '', montoVenta = '') {
++        try {
++          await fetch(GOOGLE_SCRIPT_URL, {
++            method: 'POST',
++            headers: { 'Content-Type': 'text/plain;charset=utf-8' },
++            body: JSON.stringify({
++              action: 'updateStatus',
++              token: getToken(),
++              id,
++              Estado: estado,
++              ProductoVendido: productoVendido,
++              MontoVenta: montoVenta,
++            }),
++          });
++          loadLeads();
++        } catch (err) {
++          alert('No se pudo actualizar. Revisa tu conexión.');
++        }
++      }
++
++      authBtn.addEventListener('click', () => {
++        sessionStorage.setItem('vg_admin_token', secretInput.value.trim());
++        authError.classList.add('hidden');
++        loadLeads();
++      });
++
++      secretInput.addEventListener('keydown', (e) => {
++        if (e.key === 'Enter') authBtn.click();
++      });
++
++      refreshBtn?.addEventListener('click', loadLeads);
++
++      if (getToken()) loadLeads();
++    });
++  </script>
++</Layout>
+diff --git a/src/pages/catalogo.astro b/src/pages/catalogo.astro
+index 22efbe2..047076f 100644
+--- a/src/pages/catalogo.astro
++++ b/src/pages/catalogo.astro
+@@ -3,9 +3,10 @@
+ import Layout from '../layouts/Layout.astro';
+ // IMPORTAMOS LOS DATOS DESDE TU ARCHIVO AMIGABLE:
+ import { catalogData } from '../data/productos';
++import { CONTACT_INFO } from '../constants.ts';
+ ---
+ 
+-<Layout title="Catálogo Técnico de Productos">
++<Layout title="Catálogo Técnico de Productos" description="Explora nuestro catálogo B2B de papelería técnica, regalos corporativos y volúmenes industriales. Consulta materiales, acabados y MOQ.">
+   
+   <section class="bg-gradient-to-br from-[#009EE0] via-[#007BB3] to-[#00456F] relative overflow-hidden py-24 md:py-32 text-center">
+     <div class="absolute inset-0 bg-[radial-gradient(#91DAEE_1px,transparent_1px)] [background-size:16px_16px] opacity-15"></div>
+@@ -26,6 +27,7 @@ import { catalogData } from '../data/productos';
+       <div class="bg-white border border-[#91DAEE]/40 rounded-2xl p-6 mb-16 shadow-xl shadow-blue-900/5 -translate-y-12 relative z-20">
+         <div class="flex flex-col lg:flex-row gap-5 items-center justify-between">
+           <div class="w-full lg:max-w-md relative">
++            <label for="search-input" class="sr-only">Buscar producto</label>
+             <span class="absolute inset-y-0 left-0 pl-3.5 flex items-center text-slate-400">🔍</span>
+             <input 
+               type="text" 
+@@ -48,6 +50,18 @@ import { catalogData } from '../data/productos';
+         </div>
+       </div>
+ 
++      <div id="no-results" class="hidden text-center py-16">
++        <p class="text-slate-600 font-medium mb-4">No encontramos productos con ese término. Cuéntanos qué necesitas y te ayudamos directamente.</p>
++        <a
++          href={CONTACT_INFO.whatsappUrl}
++          target="_blank"
++          rel="noopener noreferrer"
++          class="inline-block bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-xs uppercase tracking-wider px-6 py-3 rounded-xl transition-all active:scale-95"
++        >
++          Consultar por WhatsApp
++        </a>
++      </div>
++
+       <div class="space-y-24" id="catalog-sections-container">
+         {catalogData.map((category) => (
+           <div class="category-section transition-all duration-300" data-category={category.id}>
+@@ -99,6 +113,15 @@ import { catalogData } from '../data/productos';
+                         {p.moq}
+                       </span>
+                     </div>
++
++                    <a
++                      href={`https://wa.me/${CONTACT_INFO.phone.replace('+', '')}?text=${encodeURIComponent(`Hola, quiero cotizar: ${p.nombre}`)}`}
++                      target="_blank"
++                      rel="noopener noreferrer"
++                      class="block text-center bg-[#009EE0] hover:bg-[#1CB1E1] text-white font-bold text-xs uppercase tracking-wider py-3 rounded-xl transition-all active:scale-95"
++                    >
++                      Cotizar este producto
++                    </a>
+                   </div>
+ 
+                 </div>
+@@ -117,10 +140,12 @@ import { catalogData } from '../data/productos';
+       const searchInput = document.getElementById('search-input');
+       const filterButtons = document.querySelectorAll('.category-btn');
+       const sections = document.querySelectorAll('.category-section');
++      const noResults = document.getElementById('no-results');
+       let currentCategory = 'all';
+ 
+       function filterCatalog() {
+         const query = searchInput.value.toLowerCase().trim();
++        let totalVisible = 0;
+ 
+         sections.forEach(section => {
+           const catId = section.getAttribute('data-category');
+@@ -142,10 +167,13 @@ import { catalogData } from '../data/productos';
+ 
+           if (matchesCategory && visibleCardsInSection > 0) {
+             section.style.display = '';
++            totalVisible += visibleCardsInSection;
+           } else {
+             section.style.display = 'none';
+           }
+         });
++
++        noResults.classList.toggle('hidden', totalVisible > 0);
+       }
+ 
+       filterButtons.forEach(btn => {
+diff --git a/src/pages/cotizaciones.astro b/src/pages/cotizaciones.astro
+index 1ac49a3..f451e9f 100644
+--- a/src/pages/cotizaciones.astro
++++ b/src/pages/cotizaciones.astro
+@@ -1,12 +1,12 @@
+ ---
+ // src/pages/cotizaciones.astro
+ import Layout from '../layouts/Layout.astro';
+-import { CONTACT_INFO } from '../constants.ts';
++import { CONTACT_INFO, WEB3FORMS_ACCESS_KEY, GOOGLE_SCRIPT_URL } from '../constants.ts';
+ 
+ const emailDestino = CONTACT_INFO.email || 'mvallejos@vatagraphic.cl';
+ ---
+ 
+-<Layout title="Solicitar Cotización Industrial">
++<Layout title="Solicitar Cotización Industrial" description="Solicita tu cotización de impresión corporativa: completa el formulario o contáctanos por WhatsApp, correo o teléfono. Respuesta inmediata.">
+   
+   <section class="bg-gradient-to-br from-[#00456F] via-[#005C94] to-[#009EE0] relative overflow-hidden py-20 text-center text-white">
+     <div class="absolute inset-0 bg-[radial-gradient(#91DAEE_1px,transparent_1px)] [background-size:16px_16px] opacity-15"></div>
+@@ -126,11 +126,136 @@ Ten a la mano los siguientes datos al momento de contactar a nuestro equipo. Est
+ 
+       </div>
+ 
++      <div class="mt-12 bg-white border border-[#91DAEE]/20 rounded-2xl p-8 shadow-sm max-w-3xl mx-auto">
++        <h2 class="text-[#00456F] font-black text-xl md:text-2xl mb-2 tracking-tight flex items-center gap-2">
++          ✍️ O completa el formulario directo
++        </h2>
++        <p class="text-slate-600 text-sm mb-8 leading-relaxed">
++          Envíanos tu solicitud y un ejecutivo te responderá a la brevedad.
++        </p>
++
++        <form id="quote-form" class="space-y-5">
++          <input type="hidden" name="access_key" value={WEB3FORMS_ACCESS_KEY} />
++          <input type="hidden" name="subject" value="Nueva solicitud de cotización desde el sitio web" />
++          <input type="checkbox" name="botcheck" class="hidden" style="display:none" />
++
++          <div class="grid grid-cols-1 sm:grid-cols-2 gap-5">
++            <div>
++              <label for="nombre" class="block text-xs font-bold text-[#00456F] mb-1.5 uppercase tracking-wider">Nombre completo *</label>
++              <input type="text" id="nombre" name="Nombre" required class="w-full bg-[#F7FAFD] border border-slate-300 rounded-xl px-4 py-3 text-sm text-[#00456F] outline-none focus:border-[#009EE0] focus:ring-2 focus:ring-[#009EE0]/20 transition-all" />
++            </div>
++            <div>
++              <label for="empresa" class="block text-xs font-bold text-[#00456F] mb-1.5 uppercase tracking-wider">Empresa</label>
++              <input type="text" id="empresa" name="Empresa" class="w-full bg-[#F7FAFD] border border-slate-300 rounded-xl px-4 py-3 text-sm text-[#00456F] outline-none focus:border-[#009EE0] focus:ring-2 focus:ring-[#009EE0]/20 transition-all" />
++            </div>
++          </div>
++
++          <div class="grid grid-cols-1 sm:grid-cols-2 gap-5">
++            <div>
++              <label for="email" class="block text-xs font-bold text-[#00456F] mb-1.5 uppercase tracking-wider">Correo electrónico *</label>
++              <input type="email" id="email" name="Correo" required class="w-full bg-[#F7FAFD] border border-slate-300 rounded-xl px-4 py-3 text-sm text-[#00456F] outline-none focus:border-[#009EE0] focus:ring-2 focus:ring-[#009EE0]/20 transition-all" />
++            </div>
++            <div>
++              <label for="telefono" class="block text-xs font-bold text-[#00456F] mb-1.5 uppercase tracking-wider">Teléfono</label>
++              <input type="tel" id="telefono" name="Telefono" class="w-full bg-[#F7FAFD] border border-slate-300 rounded-xl px-4 py-3 text-sm text-[#00456F] outline-none focus:border-[#009EE0] focus:ring-2 focus:ring-[#009EE0]/20 transition-all" />
++            </div>
++          </div>
++
++          <div class="grid grid-cols-1 sm:grid-cols-2 gap-5">
++            <div>
++              <label for="rubro" class="block text-xs font-bold text-[#00456F] mb-1.5 uppercase tracking-wider">Rubro / Industria</label>
++              <input type="text" id="rubro" name="Rubro" placeholder="Ej: Hotelería, Educación..." class="w-full bg-[#F7FAFD] border border-slate-300 rounded-xl px-4 py-3 text-sm text-[#00456F] outline-none focus:border-[#009EE0] focus:ring-2 focus:ring-[#009EE0]/20 transition-all" />
++            </div>
++            <div>
++              <label for="como-conocio" class="block text-xs font-bold text-[#00456F] mb-1.5 uppercase tracking-wider">¿Cómo nos conoció?</label>
++              <select id="como-conocio" name="ComoConocio" class="w-full bg-[#F7FAFD] border border-slate-300 rounded-xl px-4 py-3 text-sm text-[#00456F] outline-none focus:border-[#009EE0] focus:ring-2 focus:ring-[#009EE0]/20 transition-all">
++                <option value="">Seleccionar...</option>
++                <option value="Referido">Referido</option>
++                <option value="Google">Google / búsqueda</option>
++                <option value="Redes sociales">Redes sociales</option>
++                <option value="Otro">Otro</option>
++              </select>
++            </div>
++          </div>
++
++          <div>
++            <label for="producto-interes" class="block text-xs font-bold text-[#00456F] mb-1.5 uppercase tracking-wider">Producto de interés</label>
++            <input type="text" id="producto-interes" name="ProductoInteres" placeholder="Ej: Carpetas corporativas" class="w-full bg-[#F7FAFD] border border-slate-300 rounded-xl px-4 py-3 text-sm text-[#00456F] outline-none focus:border-[#009EE0] focus:ring-2 focus:ring-[#009EE0]/20 transition-all" />
++          </div>
++
++          <div>
++            <label for="mensaje" class="block text-xs font-bold text-[#00456F] mb-1.5 uppercase tracking-wider">Detalle de tu pedido *</label>
++            <textarea id="mensaje" name="Mensaje" required rows="4" placeholder="Cantidad, especificaciones..." class="w-full bg-[#F7FAFD] border border-slate-300 rounded-xl px-4 py-3 text-sm text-[#00456F] outline-none focus:border-[#009EE0] focus:ring-2 focus:ring-[#009EE0]/20 transition-all resize-none"></textarea>
++          </div>
++
++          <button type="submit" id="submit-btn" class="w-full bg-[#009EE0] hover:bg-[#1CB1E1] text-white font-bold py-4 rounded-xl text-sm uppercase tracking-wider transition-all shadow-md active:scale-95">
++            Enviar solicitud
++          </button>
++
++          <p id="form-result" class="text-center text-sm font-semibold hidden"></p>
++        </form>
++      </div>
++
+     </div>
+   </section>
+ 
+-  <script is:inline>
++  <script is:inline define:vars={{ GOOGLE_SCRIPT_URL }}>
+     document.addEventListener('DOMContentLoaded', () => {
++      const quoteForm = document.getElementById('quote-form');
++      const submitBtn = document.getElementById('submit-btn');
++      const formResult = document.getElementById('form-result');
++
++      if (quoteForm) {
++        quoteForm.addEventListener('submit', async (e) => {
++          e.preventDefault();
++          submitBtn.disabled = true;
++          submitBtn.innerText = 'Enviando...';
++          formResult.classList.add('hidden');
++
++          const formData = new FormData(quoteForm);
++          const object = Object.fromEntries(formData);
++          const json = JSON.stringify(object);
++
++          try {
++            const response = await fetch('https://api.web3forms.com/submit', {
++              method: 'POST',
++              headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
++              body: json,
++            });
++            const result = await response.json();
++
++            // Guardamos también el lead en la Cartera de Clientes (Google Sheets).
++            // Si esto falla, no interrumpe la experiencia del usuario: el email ya se envió.
++            if (GOOGLE_SCRIPT_URL && GOOGLE_SCRIPT_URL.startsWith('http')) {
++              fetch(GOOGLE_SCRIPT_URL, {
++                method: 'POST',
++                headers: { 'Content-Type': 'text/plain;charset=utf-8' },
++                body: json,
++              }).catch((err) => console.warn('No se pudo guardar en la cartera de clientes:', err));
++            }
++
++            formResult.classList.remove('hidden');
++            if (result.success) {
++              formResult.textContent = '¡Gracias! Recibimos tu solicitud, te contactaremos pronto.';
++              formResult.classList.remove('text-red-600');
++              formResult.classList.add('text-emerald-600');
++              quoteForm.reset();
++            } else {
++              formResult.textContent = 'Hubo un problema al enviar. Intenta por WhatsApp mientras lo revisamos.';
++              formResult.classList.remove('text-emerald-600');
++              formResult.classList.add('text-red-600');
++            }
++          } catch (error) {
++            formResult.classList.remove('hidden');
++            formResult.textContent = 'Hubo un problema al enviar. Intenta por WhatsApp mientras lo revisamos.';
++            formResult.classList.add('text-red-600');
++          } finally {
++            submitBtn.disabled = false;
++            submitBtn.innerText = 'Enviar solicitud';
++          }
++        });
++      }
++
+       const emailCard = document.getElementById('email-card');
+       const copyToast = document.getElementById('copy-toast');
+       const actionBtn = document.getElementById('email-action-btn');
+diff --git a/src/pages/index.astro b/src/pages/index.astro
+index 6c794b1..f788c41 100644
+--- a/src/pages/index.astro
++++ b/src/pages/index.astro
+@@ -2,9 +2,10 @@
+ // src/pages/index.astro
+ import Layout from '../layouts/Layout.astro';
+ import { CONTACT_INFO } from '../constants.ts';
++import { clientesDestacados, testimonios } from '../data/pruebaSocial.ts';
+ ---
+ 
+-<Layout title="Inicio | Imprenta y Regalos Corporativos">
++<Layout title="Inicio | Imprenta y Regalos Corporativos" description="Imprenta B2B en Chile: papelería corporativa, regalos empresariales y volúmenes industriales con facturación inmediata. Cotiza en línea.">
+   
+   <section class="bg-gradient-to-br from-[#009EE0] via-[#007BB3] to-[#00456F] relative overflow-hidden py-24 md:py-36 text-center">
+     <div class="absolute inset-0 bg-[radial-gradient(#91DAEE_1px,transparent_1px)] [background-size:16px_16px] opacity-15"></div>
+@@ -42,7 +43,7 @@ Encuentra aquí la alta gama en soluciones gráficas integrales con un catálogo
+       <div class="text-center max-w-3xl mx-auto mb-16">
+         <span class="text-[#009EE0] font-bold uppercase tracking-wider text-sm">Estándar Operativo</span>
+         <h2 class="text-[#00456F] font-black tracking-tight text-3xl md:text-4xl mt-2 mb-4">
+-          ¿Por qué las grandes corporraciones nos eligen?
++          ¿Por qué las grandes corporaciones nos eligen?
+         </h2>
+         <p class="text-slate-600 font-normal leading-relaxed">
+           Diseñamos un flujo enfocado exclusivamente en el mercado B2B que elimina la fricción en la cadena de suministro gráfico.
+@@ -62,7 +63,9 @@ Contamos con un amplio catálogo que integra desde papelería técnica hasta reg
+           <div class="w-12 h-12 bg-[#009EE0] rounded-xl flex items-center justify-center text-white text-xl font-bold mb-6">📦</div>
+           <h3 class="text-xl font-bold text-[#00456F] mb-3">Volúmenes Industriales</h3>
+           <p class="text-slate-600 font-normal text-sm leading-relaxed">
+-Estamos preparados para gestionar tiradas masivas de impresión y copiado con absoluta precisión. Nuestra red operativa permite absorber pedidos de gran volumen bajo estándares técnicos rigurosos, garantizando calidad constante en cada pieza producida.        </div>
++Estamos preparados para gestionar tiradas masivas de impresión y copiado con absoluta precisión. Nuestra red operativa permite absorber pedidos de gran volumen bajo estándares técnicos rigurosos, garantizando calidad constante en cada pieza producida.
++          </p>
++        </div>
+ 
+         <div class="bg-[#F7FAFD] border border-[#91DAEE]/30 p-8 rounded-2xl shadow-sm transition-all hover:shadow-md">
+           <div class="w-12 h-12 bg-[#009EE0] rounded-xl flex items-center justify-center text-white text-xl font-bold mb-6">💼</div>
+@@ -75,6 +78,29 @@ Somos una empresa diseñada para trabajar con empresas. Ofrecemos facturación i
+     </div>
+   </section>
+ 
++  <section class="bg-white py-16 border-t border-slate-100">
++    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
++      <p class="text-center text-xs font-bold uppercase tracking-widest text-slate-400 mb-8">
++        Empresas que confían en nosotros
++      </p>
++      <div class="flex flex-wrap justify-center items-center gap-x-12 gap-y-6 mb-20 opacity-70">
++        {clientesDestacados.map((cliente) => (
++          <span class="text-slate-400 font-bold text-lg tracking-tight">{cliente}</span>
++        ))}
++      </div>
++
++      <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
++        {testimonios.map((t) => (
++          <div class="bg-[#F7FAFD] border border-[#91DAEE]/30 p-6 rounded-2xl">
++            <p class="text-slate-600 text-sm leading-relaxed italic mb-4">"{t.texto}"</p>
++            <p class="font-bold text-[#00456F] text-sm">{t.nombre}</p>
++            <p class="text-slate-500 text-xs">{t.cargo}</p>
++          </div>
++        ))}
++      </div>
++    </div>
++  </section>
++
+   <section class="bg-[#F7FAFD] py-20 border-t border-b border-[#91DAEE]/20">
+     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col lg:flex-row items-center justify-between gap-10">
+       <div class="max-w-2xl">
+diff --git a/src/pages/sobre-nosotros.astro b/src/pages/sobre-nosotros.astro
+index f5699d8..94aad78 100644
+--- a/src/pages/sobre-nosotros.astro
++++ b/src/pages/sobre-nosotros.astro
+@@ -3,7 +3,7 @@
+ import Layout from '../layouts/Layout.astro';
+ ---
+ 
+-<Layout title="Infraestructura Escala Industrial">
++<Layout title="Infraestructura Escala Industrial" description="Más de 25 años de experiencia en soluciones gráficas a gran escala para empresas: impresión corporativa, copiado industrial y proyectos a medida.">
+   
+   <section class="bg-gradient-to-br from-[#009EE0] via-[#007BB3] to-[#00456F] relative overflow-hidden py-24 md:py-32 text-center">
+     <div class="absolute inset-0 bg-[radial-gradient(#91DAEE_1px,transparent_1px)] [background-size:16px_16px] opacity-15"></div>
+@@ -63,4 +63,29 @@ En VataGraphic nos convertimos en el aliado estratégico de tus proyectos de imp
+     </div>
+   </section>
+ 
++  <section class="bg-[#00456F] py-16 text-center">
++    <div class="max-w-2xl mx-auto px-4 sm:px-6 lg:px-8">
++      <h2 class="text-white font-black tracking-tight text-2xl md:text-3xl mb-3">
++        ¿Listo para llevar tu proyecto a producción?
++      </h2>
++      <p class="text-blue-100/80 font-light leading-relaxed mb-8">
++        Revisa nuestro catálogo técnico o conversa directo con un ejecutivo para resolver tu próxima cotización.
++      </p>
++      <div class="flex flex-wrap justify-center gap-4">
++        <a
++          href={`${import.meta.env.BASE_URL}catalogo`}
++          class="bg-white text-[#00456F] hover:bg-[#F7FAFD] font-bold px-8 py-4 rounded-xl text-sm uppercase tracking-wider transition-all shadow-lg active:scale-95"
++        >
++          Ver Catálogo
++        </a>
++        <a
++          href={`${import.meta.env.BASE_URL}cotizaciones`}
++          class="bg-[#009EE0] hover:bg-[#1CB1E1] border border-white/20 text-white font-bold px-8 py-4 rounded-xl text-sm uppercase tracking-wider transition-all shadow-lg active:scale-95"
++        >
++          Solicitar Cotización
++        </a>
++      </div>
++    </div>
++  </section>
++
+ </Layout>
+\ No newline at end of file
