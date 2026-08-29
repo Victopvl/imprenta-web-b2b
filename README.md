@@ -1,63 +1,81 @@
 # Imprenta Web B2B
 
-Sistema web B2B para catálogo técnico y recepción digital
-de solicitudes de cotización para una empresa de impresión.
+> Sistema web B2B para digitalizar el catálogo de productos y la recepción de solicitudes de cotización de una empresa de impresión.
 
-## 🎯 Objetivo
+[🌐 Ver demo](https://victopvl.github.io/imprenta-web-b2b/)
 
-Digitalizar el proceso de descubrimiento de productos y
-recepción de solicitudes comerciales...
+---
 
-## Problema
+## 🎯 Contexto
 
-...
+Las empresas de impresión B2B suelen gestionar consultas y solicitudes comerciales mediante canales dispersos como WhatsApp, correo electrónico y llamadas telefónicas.
 
-## Solución
+Este proyecto propone una interfaz web centralizada que facilita el descubrimiento de productos y permite a clientes empresariales enviar solicitudes de cotización de forma estructurada.
 
-...
+---
 
-## Funcionalidades
+## 💡 Solución
 
-- Catálogo digital
-- Búsqueda y filtrado
-- Fichas técnicas
-- Solicitud de cotización
-- Integración con WhatsApp
-- Integración con correo
-- Formulario web
-- Diseño responsive
+Se desarrolló una plataforma web orientada a clientes B2B que centraliza:
 
-## Arquitectura
+- Catálogo digital de productos.
+- Información y especificaciones técnicas.
+- Navegación por categorías.
+- Búsqueda y filtrado.
+- Solicitud de cotizaciones.
+- Integración con canales de contacto comerciales.
 
-...
+El objetivo es reducir la fricción entre el descubrimiento de un producto y el inicio del proceso comercial.
 
-## Tech Stack
+---
 
-- Astro
-- TypeScript
-- Tailwind CSS
-- Web3Forms
+## 🚀 Funcionalidades
 
-## Estructura
+### Catálogo
 
-...
+- Catálogo estructurado por categorías.
+- Fichas de productos.
+- Especificaciones técnicas.
+- Información de cantidades mínimas.
+- Búsqueda y filtrado.
 
-## Demo
+### Cotizaciones
 
-...
+- Formulario estructurado de solicitud.
+- Captura de información del cliente.
+- Detalle del requerimiento.
+- Envío de solicitudes mediante Web3Forms.
+- Integración con canales de contacto.
 
-## Estado
+### Experiencia
 
-MVP
+- Diseño responsive.
+- Navegación orientada a conversión.
+- CTA comerciales.
+- Arquitectura de páginas reutilizable.
+- Interfaz adaptada al contexto B2B.
 
-## Roadmap
+---
 
-...
+## 🏗️ Arquitectura
 
-## Limitaciones
+El proyecto utiliza una arquitectura frontend estática basada en Astro.
 
-...
-
-## Author
-
-Victoria Vallejos
+```text
+                         Usuario B2B
+                              │
+                              ▼
+                       Web Application
+                              │
+                 ┌────────────┴────────────┐
+                 │                         │
+             Catálogo                  Cotización
+                 │                         │
+                 ▼                         ▼
+          Datos estructurados         Formulario
+                                           │
+                                           ▼
+                                      Web3Forms
+                                           │
+                                           ▼
+                                   Canal de recepción
