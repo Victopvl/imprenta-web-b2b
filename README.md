@@ -1,43 +1,63 @@
-# Astro Starter Kit: Minimal
+# Imprenta Web B2B
 
-```sh
-pnpm create astro@latest -- --template minimal
-```
+Sistema web B2B para catálogo técnico y recepción digital
+de solicitudes de cotización para una empresa de impresión.
 
-> 🧑‍🚀 **Seasoned astronaut?** Delete this file. Have fun!
+## 🎯 Objetivo
 
-## 🚀 Project Structure
+Digitalizar el proceso de descubrimiento de productos y
+recepción de solicitudes comerciales...
 
-Inside of your Astro project, you'll see the following folders and files:
+## Problema
 
-```text
-/
-├── public/
-├── src/
-│   └── pages/
-│       └── index.astro
-└── package.json
-```
+...
 
-Astro looks for `.astro` or `.md` files in the `src/pages/` directory. Each page is exposed as a route based on its file name.
+## Solución
 
-There's nothing special about `src/components/`, but that's where we like to put any Astro/React/Vue/Svelte/Preact components.
+...
 
-Any static assets, like images, can be placed in the `public/` directory.
+## Funcionalidades
 
-## 🧞 Commands
+- Catálogo digital
+- Búsqueda y filtrado
+- Fichas técnicas
+- Solicitud de cotización
+- Integración con WhatsApp
+- Integración con correo
+- Formulario web
+- Diseño responsive
 
-All commands are run from the root of the project, from a terminal:
+## Arquitectura
 
-| Command                   | Action                                           |
-| :------------------------ | :----------------------------------------------- |
-| `pnpm install`             | Installs dependencies                            |
-| `pnpm dev`             | Starts local dev server at `localhost:4321`      |
-| `pnpm build`           | Build your production site to `./dist/`          |
-| `pnpm preview`         | Preview your build locally, before deploying     |
-| `pnpm astro ...`       | Run CLI commands like `astro add`, `astro check` |
-| `pnpm astro -- --help` | Get help using the Astro CLI                     |
+...
 
-## 👀 Want to learn more?
+## Tech Stack
 
-Feel free to check [our documentation](https://docs.astro.build) or jump into our [Discord server](https://astro.build/chat).
+- Astro
+- TypeScript
+- Tailwind CSS
+- Web3Forms
+
+## Estructura
+
+...
+
+## Demo
+
+...
+
+## Estado
+
+MVP
+
+## Roadmap
+
+...
+
+## Limitaciones
+
+...
+
+## Author
+
+Victoria Vallejos
