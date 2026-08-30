@@ -9,4 +9,4 @@ export const CONTACT_INFO = {
 };
 
 // Tu clave real de Web3Forms (¡Ya está configurada!)
-export const WEB3FORMS_ACCESS_KEY = import.meta.env.PUBLIC_WEB3FORMS_ACCESS_KEY;
+export const WEB3FORMS_ACCESS_KEY = "bfe6aa3b-4f94-454c-b162-ddfda87a451d";
