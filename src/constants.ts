@@ -10,6 +10,3 @@ export const CONTACT_INFO = {
 
 // Tu clave real de Web3Forms (¡Ya está configurada!)
 export const WEB3FORMS_ACCESS_KEY = "bfe6aa3b-4f94-454c-b162-ddfda87a451d";
-
-// Tu URL de Google Apps Script (¡Pega aquí la que obtengas al implementar en el Paso 4!)
-export const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbx89mpRWYiPLzKXFuWsN1nHBBLaEw4yb2EQJOCTawQTv8wWQK2MPMOxWg2JXx0tf05K/exec";
