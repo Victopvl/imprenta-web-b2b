@@ -8,5 +8,5 @@ export const CONTACT_INFO = {
   address: "Santiago, Chile",
 };
 
-// Tu clave real de Web3Forms (¡Ya está configurada!)
+// Tu clave real de Web3Forms 
 export const WEB3FORMS_ACCESS_KEY = "bfe6aa3b-4f94-454c-b162-ddfda87a451d";
